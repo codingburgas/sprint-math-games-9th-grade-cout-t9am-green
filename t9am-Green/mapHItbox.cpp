@@ -35,5 +35,5 @@ void mapHitbox::Hitbox(Rectangle &collidingObject) {
 		collidingObject.x -= 10;
 
 	if (isCollidingDown)
-		collidingObject.y -= 10 ;
+		collidingObject.y -= 10;
 }

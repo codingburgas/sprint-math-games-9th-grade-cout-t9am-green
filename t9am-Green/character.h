@@ -12,7 +12,13 @@ public:
 	Vector2 position;           //Contains the position where the character is drawn
 private:
 	int speed;
-	Texture2D movingRight;      //Contains the spritesheet file of the character
+
+	Texture2D movingRight;      
+	Texture2D movingLeft;
+	Texture2D movingUp;
+	Texture2D movingDown;
+	//Contains the spritesheet file of the character
+
 	int frame;                  //Contains the number of the current frame
 	Rectangle source;           //Contains the part of the spritesheet with the current frame
 	const float updateTime{1.f/12.f}; //The time between two frames

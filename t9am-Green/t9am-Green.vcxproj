@@ -13,10 +13,12 @@
   <ItemGroup>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="mapHItbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="mapHItbox.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
