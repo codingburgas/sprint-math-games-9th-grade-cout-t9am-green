@@ -9,7 +9,7 @@ public:
 	Rectangle bottomBound;
 	Rectangle rightBound;
 	// The rectangles of the area of the map, where the character cannot go to
-	void drawHitbox(Rectangle collidingObject);
+	void Hitbox(Rectangle &collidingObject);
 	//Draws the outlines of those rectangles
 private:
 	const float paddingUp = 132;
