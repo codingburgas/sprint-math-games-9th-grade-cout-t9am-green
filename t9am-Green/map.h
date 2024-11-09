@@ -9,6 +9,8 @@ public:
 
 private:
 	Texture2D mapTexture;
-	Texture2D doorTexture;
+	Texture2D doorNotCollidingTexture;
+	Texture2D doorCollidingTexture;
+	Texture2D doorCurrentTexture;
 	Rectangle door;
 };

@@ -8,7 +8,7 @@ void Game::Update() {
 	Rectangle CharacterRec = character.getTextureRect();
 	mapHitbox.CheckForColliding(CharacterRec);
 	map.UpdateDoor(CharacterRec);
-	character.Update(CharacterRec.x, CharacterRec.y);
+	character.Update(CharacterRec.x, CharacterRec.y); //Updates the position of the character
 }
 
 void Game::Draw() {
