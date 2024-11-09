@@ -1,11 +1,11 @@
 #include "character.h"
 
 Character::Character() {
-	speed = 10;
+	speed = 13;
 	movingRight = LoadTexture("Graphics/spriteRight.png");
 	movingLeft = LoadTexture("Graphics/spriteLeft.png");
 	movingUp = LoadTexture("Graphics/spriteUp.png");
-	movingDown = LoadTexture("Graphics/spriteDown.png");
+	movingDown = LoadTexture("Graphics/spriteDown.png"); 
 	position = { 0.f, 0.f };
 	frame = 0;
 }
@@ -28,9 +28,11 @@ void Character::Draw() {
 	}
 }
 
-void Character::Update(float x, float y) {
-	position.x = x;
-	position.y = y;
+void Character::Update(float x, float y) { //These x and y variables will change only when the character is
+	position.x = x;						   //trying to walk through the wall (look at the Update() function
+	position.y = y;						   //in the game.cpp file and at the CheckForColliding function in
+										   //the mapHitbox.cpp file.
+
 
 	if (IsKeyDown(KEY_D)) { //Moving right
 		frame++;

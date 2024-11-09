@@ -12,7 +12,6 @@ public:
 	Vector2 position;           //Contains the position where the character is drawn
 private:
 	int speed;
-
 	Texture2D movingRight;      
 	Texture2D movingLeft;
 	Texture2D movingUp;

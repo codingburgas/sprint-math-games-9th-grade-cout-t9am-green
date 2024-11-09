@@ -1,18 +1,12 @@
 #include "raylib.h"
-#include "character.h"
-#include "mapHItbox.h"
-#include "map.h"
-#include <iostream>
+#include "game.h"
 
 using namespace std;
 
 int main() {
 	InitWindow(900, 500, "test");
 
-	Map map;
-	Character character;
-	mapHitbox mapHitbox;
-
+	Game game;
 	SetTargetFPS(60);
 
 	while (!WindowShouldClose()) {
@@ -20,13 +14,10 @@ int main() {
 		BeginDrawing();
 
 		ClearBackground(WHITE);
-		Rectangle characterRec = character.getTextureRect();
 		
-		mapHitbox.Hitbox(characterRec); //Doesn't let the character to leave the map
-		
-		map.Draw(); //Draws the map on the screen
-		character.Update(characterRec.x, characterRec.y); //Updates the character position
-		character.Draw(); // Draws the character
+		game.Draw();
+		game.Update();
+
 		EndDrawing();
 
 	}
