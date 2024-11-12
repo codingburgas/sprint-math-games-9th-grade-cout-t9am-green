@@ -6,10 +6,10 @@ MapHitbox::MapHitbox() {
 	rightBound = { upperBound.width, 0.f, 56.f, 500.f };
 	bottomBound = { 0.f, leftBound.height - 52, upperBound.width, 52.f };
 }
-
-void MapHitbox::CheckForColliding(Rectangle &collidingObject) { //Here a reference is used to change the 
-	bool isCollidingUp = false;									//actual position of the colliding object
-	bool isCollidingLeft = false;								//(the character) and not of its copy.
+//Here a reference is used to change the actual position of the colliding object (the character) and not of its copy.
+void MapHitbox::CheckForColliding(Rectangle &collidingObject) { 
+	bool isCollidingUp = false;									
+	bool isCollidingLeft = false;								
 	bool isCollidingRight = false;
 	bool isCollidingDown = false;
 
@@ -26,14 +26,14 @@ void MapHitbox::CheckForColliding(Rectangle &collidingObject) { //Here a referen
 		isCollidingDown = true;
 
 	if (isCollidingUp)
-		collidingObject.y += 13;
+		collidingObject.y += 30;
 
 	if (isCollidingLeft)
-		collidingObject.x += 13;
+		collidingObject.x += 30;
 
 	if (isCollidingRight)
-		collidingObject.x -= 13;
+		collidingObject.x -= 30;
 
 	if (isCollidingDown)
-		collidingObject.y -= 13;
+		collidingObject.y -= 30;
 }

@@ -8,7 +8,8 @@ void Game::Update() {
 	mapHitbox.CheckForColliding(CharacterRec);
 	map.UpdateDoor(CharacterRec);
 	map.CheckIfDoorIsUsed(CharacterRec);
-	character.Update(CharacterRec.x, CharacterRec.y); //Updates the position of the character
+	character.Update(CharacterRec.x, CharacterRec.y);
+	map.TrackCharacter(CharacterRec);
 }
 
 void Game::Draw() {

@@ -7,7 +7,9 @@ class Game {
 public:
 	Game();
 	Map map;
+	//Draws all the objects of the game
 	void Draw();
+	//Updates the positions of the objects and checks for collisions
 	void Update();
 private:
 	Character character;

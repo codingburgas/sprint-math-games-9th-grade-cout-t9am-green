@@ -6,19 +6,25 @@
 class Character {
 public:
 	Character();
-	void Draw();                //Draws the character on the screen
-	void Update(float x, float y);              //Updates the position of the character
-	Rectangle getTextureRect(); //Returns the hitbox of the character
-	Vector2 position;           //Contains the position where the character is drawn
+	//Draws the character on the screen
+	void Draw();
+	//Updates the position of the character
+	void Update(float x, float y);
+	//Returns the hitbox of the character
+	Rectangle getTextureRect();
+	//Contains the position where the character is drawn
+	Vector2 position;
 private:
 	int speed;
+	//Contains the spritesheet file of the character
 	Texture2D movingRight;      
 	Texture2D movingLeft;
 	Texture2D movingUp;
 	Texture2D movingDown;
-	//Contains the spritesheet file of the character
-
-	int frame;                  //Contains the number of the current frame
-	Rectangle source;           //Contains the part of the spritesheet with the current frame
-	const float updateTime{1.f/12.f}; //The time between two frames
+	//Contains the number of the current frame
+	int frame;
+	//Contains the part of the spritesheet with the current frame
+	Rectangle source;
+	//The time between two frames
+	const float updateTime{1.f/12.f};
 };
