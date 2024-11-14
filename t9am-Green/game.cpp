@@ -16,4 +16,3 @@ void Game::Draw() {
 	map.Draw();
 	character.Draw();
 }
-

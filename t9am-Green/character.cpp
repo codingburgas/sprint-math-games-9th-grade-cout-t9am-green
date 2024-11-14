@@ -1,7 +1,7 @@
 #include "character.h"
 
 Character::Character() {
-	speed = 30;
+	speed = 13;
 	movingRight = LoadTexture("Graphics/spriteRight.png");
 	movingLeft = LoadTexture("Graphics/spriteLeft.png");
 	movingUp = LoadTexture("Graphics/spriteUp.png");
@@ -75,5 +75,3 @@ void Character::Update(float x, float y) {
 Rectangle Character::getTextureRect() {
 	return Rectangle{ position.x, position.y, source.width, source.height };
 }
-
-

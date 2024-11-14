@@ -26,14 +26,14 @@ void MapHitbox::CheckForColliding(Rectangle &collidingObject) {
 		isCollidingDown = true;
 
 	if (isCollidingUp)
-		collidingObject.y += 30;
+		collidingObject.y += 13;
 
 	if (isCollidingLeft)
-		collidingObject.x += 30;
+		collidingObject.x += 13;
 
 	if (isCollidingRight)
-		collidingObject.x -= 30;
+		collidingObject.x -= 13;
 
 	if (isCollidingDown)
-		collidingObject.y -= 30;
+		collidingObject.y -= 13;
 }

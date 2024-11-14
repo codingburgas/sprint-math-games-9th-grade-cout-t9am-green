@@ -9,6 +9,8 @@ int main() {
 	Game game;
 	SetTargetFPS(60);
 
+	game.map.initializeDoorsHitboxes(5);
+
 	while (!WindowShouldClose()) {
 
 		BeginDrawing();
