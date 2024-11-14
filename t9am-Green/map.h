@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include <vector>
 #include "mapHItbox.h"
+#include "teacher.h"
 using namespace std;
 
 class Map {
@@ -37,4 +38,5 @@ private:
      LoadTexture("Graphics/hall.png"),
 	 LoadTexture("Graphics/room.png")
 	};
+	Teacher teacher;
 };

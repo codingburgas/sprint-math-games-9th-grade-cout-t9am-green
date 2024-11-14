@@ -14,6 +14,10 @@ public:
 	Rectangle getTextureRect();
 	//Contains the position where the character is drawn
 	Vector2 position;
+	Texture2D heartTexture;
+	int health;
+	int getCharacterHealth();
+	void drawHealth();
 private:
 	int speed;
 	//Contains the spritesheet file of the character

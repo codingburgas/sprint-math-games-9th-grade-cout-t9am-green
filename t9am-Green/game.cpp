@@ -15,4 +15,6 @@ void Game::Update() {
 void Game::Draw() {
 	map.Draw();
 	character.Draw();
+	character.drawHealth();
+
 }

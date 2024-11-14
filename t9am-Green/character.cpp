@@ -1,13 +1,17 @@
 #include "character.h"
 
 Character::Character() {
+	source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 	speed = 13;
 	movingRight = LoadTexture("Graphics/spriteRight.png");
 	movingLeft = LoadTexture("Graphics/spriteLeft.png");
 	movingUp = LoadTexture("Graphics/spriteUp.png");
 	movingDown = LoadTexture("Graphics/spriteDown.png"); 
+	heartTexture = LoadTexture("Graphics/heart.png");
 	position = { 100.f, 0.f };
 	frame = 0;
+	health = getCharacterHealth();
+
 }
 
 void Character::Draw() {
@@ -67,11 +71,25 @@ void Character::Update(float x, float y) {
 		WaitTime(updateTime);
 	}
 	// Not moving
-	else { 
+	else 
+	{ 
 		source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 	}
 }
 
 Rectangle Character::getTextureRect() {
 	return Rectangle{ position.x, position.y, source.width, source.height };
+}
+
+int Character::getCharacterHealth()
+{
+	return 3;
+}
+
+void Character::drawHealth()
+{
+	for (int i = 0; i < health; i++)
+	{
+		DrawTexture(heartTexture, heartTexture.width * i, 0, WHITE);
+	}
 }

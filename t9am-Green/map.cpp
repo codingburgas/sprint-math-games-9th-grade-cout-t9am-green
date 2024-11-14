@@ -30,6 +30,7 @@ case 1:
 default:
 	DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
 	DrawTexture(doorCurrentTexture, doorInRoomHitbox.x, doorInRoomHitbox.y, WHITE);
+	teacher.Draw();
 }
 }
 
