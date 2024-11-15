@@ -2,6 +2,7 @@
 #include "map.h"
 #include "character.h"
 #include "mapHItbox.h"
+#include "menu.h"
 
 class Game {
 public:
@@ -14,4 +15,6 @@ public:
 private:
 	Character character;
 	MapHitbox mapHitbox;
+	Menu menu;
+	bool MenuClosed;
 };

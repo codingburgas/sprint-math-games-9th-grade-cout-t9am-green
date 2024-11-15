@@ -16,6 +16,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapHItbox.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="teacher.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +24,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapHItbox.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="teacher.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
