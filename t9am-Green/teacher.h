@@ -10,7 +10,7 @@ public:
 	Rectangle hitboxBounds[4];
 	void Draw();
 	void initializeHitboxBounds(Rectangle hitbox);
-	void Hitbox(Rectangle &collidingObject);
+	void Hitbox(Rectangle &collidingObject); 
 		
 private:
 };

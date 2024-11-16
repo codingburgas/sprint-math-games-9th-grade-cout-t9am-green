@@ -20,12 +20,13 @@ void Teacher::initializeHitboxBounds(Rectangle hitbox) {
 }
 
 void Teacher::Hitbox(Rectangle& collidingObject) {
+	int characterSpeed = 13;
 	if (CheckCollisionRecs(collidingObject, hitboxBounds[0]))
-		collidingObject.y -= 13;
+		collidingObject.y -= characterSpeed;
 	else if (CheckCollisionRecs(collidingObject, hitboxBounds[1]))
-		collidingObject.x += 13;
+		collidingObject.x += characterSpeed;
 	else if (CheckCollisionRecs(collidingObject, hitboxBounds[2]))
-		collidingObject.y += 13;
+		collidingObject.y += characterSpeed;
 	else if (CheckCollisionRecs(collidingObject, hitboxBounds[3]))
-		collidingObject.x -= 13;
+		collidingObject.x -= characterSpeed;
 }

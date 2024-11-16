@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
 #include "raylib.h"
 #include <vector>
 #include "mapHItbox.h"
 #include "teacher.h"
+#include "hitbox.h"
 using namespace std;
 
 class Map {
@@ -16,6 +16,9 @@ public:
 	void CheckIfDoorIsUsed(Rectangle &character);
 	void TrackCharacter(Rectangle character);
 	void TeacherHitbox(Rectangle& collidingObject);
+	vector <Rectangle> initializeDoorsHitboxes(int numberOfDoors);
+	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
+	vector<vector <Rectangle>> initializeDesksHitboxes(int rows, int columns);
 	//The hall position along X axis. It is in a separated variable because it will change as the character is moving in
 	//the hall 
 	int hallXPosition;
@@ -25,12 +28,12 @@ public:
 	Texture2D doorNotCollidingTexture;
 	Texture2D doorCollidingTexture;
 	Texture2D doorCurrentTexture;
+	Texture2D deskTexture;
 	Rectangle doorInRoomHitbox;
+	vector<vector<Rectangle>> deskHitboxes;
 	vector<Rectangle> doorsInHallHitboxes;
 	vector<Texture2D> doorsInHallTextures;
 	MapHitbox mapHitbox;
-	vector <Rectangle> initializeDoorsHitboxes(int numberOfDoors);
-	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
 private:
 	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
 	int currentRoomID;

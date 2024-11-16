@@ -1,5 +1,8 @@
 #include "hitbox.h"
 
+// Hitboxes will be made of 4 rectangles for each side of the hitbox so that if the character collides with each side, he will be pushed
+// in the opposite direction.
+
 Rectangle hitboxBoundUp(Rectangle hitbox) {
 
 	return Rectangle{ hitbox.x + hitbox.width/4, hitbox.y, hitbox.width/2, 1 };

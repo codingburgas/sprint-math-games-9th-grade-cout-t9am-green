@@ -12,6 +12,7 @@ Map::Map() {
 	doorCurrentTexture = doorNotCollidingTexture;
 	//The hitbox of the door when the character is in one of the classrooms
 	doorInRoomHitbox = { 170, 70, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
+	deskTexture = LoadTexture("Graphics/desk.png");
 	//The hitboxes of the doors in the hall
 	doorsInHallHitboxes = initializeDoorsHitboxes(5);
 	//We need a different texture for each door so we can update only one of them when the character is colliding with it
@@ -20,18 +21,32 @@ Map::Map() {
 
 //Draws different rooms according to the currentRoomID variable
 void Map::Draw() { 
-switch (currentRoomID) {
-case 1:
-	DrawTexture(CurrentRoomTexture, hallXPosition, 0, WHITE);
-	for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
-		DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
+	switch (currentRoomID) {
+	case 1:
+		DrawTexture(CurrentRoomTexture, hallXPosition, 0, WHITE);
+		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
+			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
+		}
+		break;
+	default:
+		DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
+		DrawTexture(doorCurrentTexture, doorInRoomHitbox.x, doorInRoomHitbox.y, WHITE);
+		switch (currentRoomID)
+		{
+		case 2:
+			deskHitboxes = initializeDesksHitboxes(2, 5);
+			for (int i = 0; i < deskHitboxes.size(); i++) {
+				for (int j = 0; j < deskHitboxes[0].size(); j++)
+					DrawRectangleLinesEx(deskHitboxes[i][j], 1, BLACK);
+			}
+			for (int i = 0; i < deskHitboxes.size(); i++) {
+				for (int j = 0; j < deskHitboxes[0].size(); j++)
+					DrawTexture(deskTexture, deskHitboxes[i][j].x, deskHitboxes[i][j].y, WHITE);
+			}
+			break;
+		}
+		teacher.Draw();
 	}
-	break;
-default:
-	DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
-	DrawTexture(doorCurrentTexture, doorInRoomHitbox.x, doorInRoomHitbox.y, WHITE);
-	teacher.Draw();
-}
 }
 
 //Updates the door texture if it is colliding with the character
@@ -185,4 +200,18 @@ vector<Texture2D> Map::initializeDoorsTextures(int numberOfDoors)
 	for (int i = 0; i < numberOfDoors; i++)
 		textures.insert(textures.end(), doorNotCollidingTexture);
 	return textures;
+}
+
+vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
+{
+	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10, (float)mapHitbox.upperBound.height + 90, (float)deskTexture.width, deskTexture.height };
+	vector<vector<Rectangle>> hitboxes;
+
+	for (int i = 0; i < rows; i++) {
+			hitboxes.push_back({});
+		for (int j = 0; j < columns; j++)
+			hitboxes[i].push_back({(float)firstDesk.x + deskTexture.width * j + j * 35, (float)firstDesk.y, (float)deskTexture.width, (float)deskTexture.height});
+		firstDesk.y += firstDesk.height + 40;
+	}
+	return hitboxes;
 }

@@ -12,6 +12,7 @@ void MapHitbox::CheckForColliding(Rectangle &collidingObject) {
 	bool isCollidingLeft = false;								
 	bool isCollidingRight = false;
 	bool isCollidingDown = false;
+	int characterSpeed = 13;
 
 	if (CheckCollisionRecs(upperBound, collidingObject))
 		isCollidingUp = true;
@@ -26,14 +27,14 @@ void MapHitbox::CheckForColliding(Rectangle &collidingObject) {
 		isCollidingDown = true;
 
 	if (isCollidingUp)
-		collidingObject.y += 13;
+		collidingObject.y += characterSpeed;
 
 	if (isCollidingLeft)
-		collidingObject.x += 13;
+		collidingObject.x += characterSpeed;
 
 	if (isCollidingRight)
-		collidingObject.x -= 13;
+		collidingObject.x -= characterSpeed;
 
 	if (isCollidingDown)
-		collidingObject.y -= 13;
+		collidingObject.y -= characterSpeed;
 }
