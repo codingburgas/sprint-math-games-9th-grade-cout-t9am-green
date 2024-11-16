@@ -8,6 +8,7 @@ class Game {
 public:
 	Game();
 	Map map;
+	bool exitGame;
 	//Draws all the objects of the game
 	void Draw();
 	//Updates the positions of the objects and checks for collisions
@@ -16,5 +17,6 @@ private:
 	Character character;
 	MapHitbox mapHitbox;
 	Menu menu;
+	//If the menu is closed, MenuClosed will be true
 	bool MenuClosed;
 };

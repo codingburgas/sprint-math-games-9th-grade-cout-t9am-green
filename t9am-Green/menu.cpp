@@ -7,6 +7,7 @@ Menu::Menu() {
 	exitButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 + 2 * playButton.height - 25, 150, 50 };
 }
 
+// Draws the menu
 void Menu::Draw() {
 	ClearBackground(BLACK);
 	DrawRectangleRec(playButton, GREEN);
@@ -16,8 +17,18 @@ void Menu::Draw() {
 	DrawText("Count the Teacher", (float)GetScreenWidth() / 2 - 150, 40.f, 30, WHITE);
 }
 
+// Returns true when we click on the play button
 bool Menu::CheckIfPlayIsClicked() {
 	if (CheckCollisionPointRec(GetMousePosition(), playButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		return 1;
+	else
+		return 0;
+}
+
+// Returns true when we click on the exit button
+bool Menu::CheckIfExitIsClicked()
+{
+	if (CheckCollisionPointRec(GetMousePosition(), exitButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		return 1;
 	else
 		return 0;

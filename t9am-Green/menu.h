@@ -7,5 +7,5 @@ public:
 	Rectangle exitButton;
 	void Draw();
 	bool CheckIfPlayIsClicked();
-
+	bool CheckIfExitIsClicked();
 };

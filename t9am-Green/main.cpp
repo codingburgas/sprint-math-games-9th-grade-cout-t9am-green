@@ -16,9 +16,12 @@ int main() {
 		BeginDrawing();
 
 		ClearBackground(WHITE);
-		
+
 		game.Draw();
 		game.Update();
+
+		if (game.exitGame)
+			break;
 
 		EndDrawing();
 
