@@ -17,6 +17,5 @@ private:
 	Character character;
 	MapHitbox mapHitbox;
 	Menu menu;
-	//If the menu is closed, MenuClosed will be true
 	bool MenuClosed;
 };
