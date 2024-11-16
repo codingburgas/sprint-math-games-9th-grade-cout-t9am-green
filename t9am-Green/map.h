@@ -15,6 +15,7 @@ public:
 	void ChangeTheRoom(int DoorNumber, Rectangle &Character);
 	void CheckIfDoorIsUsed(Rectangle &character);
 	void TrackCharacter(Rectangle character);
+	void TeacherHitbox(Rectangle& collidingObject);
 	//The hall position along X axis. It is in a separated variable because it will change as the character is moving in
 	//the hall 
 	int hallXPosition;

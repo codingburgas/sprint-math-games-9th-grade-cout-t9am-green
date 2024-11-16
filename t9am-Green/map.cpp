@@ -163,6 +163,10 @@ void Map::TrackCharacter(Rectangle character) {
 	}
 }
 
+void Map::TeacherHitbox(Rectangle& collidingObject) {
+	teacher.Hitbox(collidingObject);
+}
+
 //Initializes the vector with the hitboxes of the doors in the hall
 vector<Rectangle> Map::initializeDoorsHitboxes(int numberOfDoors)
 {

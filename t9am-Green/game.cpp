@@ -15,6 +15,7 @@ void Game::Update() {
 		mapHitbox.CheckForColliding(CharacterRec);
 		map.UpdateDoor(CharacterRec);
 		map.CheckIfDoorIsUsed(CharacterRec);
+		map.TeacherHitbox(CharacterRec);
 		character.Update(CharacterRec.x, CharacterRec.y);
 		map.TrackCharacter(CharacterRec);
 	}
