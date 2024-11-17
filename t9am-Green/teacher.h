@@ -1,16 +1,16 @@
 #pragma once
 #include "raylib.h"
-#include "hitbox.h"
 
 class Teacher {
 public:
 	Teacher();
+	// The teacher texture
 	Texture2D texture;
+	// The teacher hitbox
 	Rectangle hitbox;
-	Rectangle hitboxBounds[4];
+	// Draws the teacher on the screen
 	void Draw();
-	void initializeHitboxBounds(Rectangle hitbox);
-	void Hitbox(Rectangle &collidingObject); 
-		
+	// Handles the teacher hitbox collisions and doesn't let the character go through it
+	void Hitbox(Rectangle& CharacterCurrentRec, Rectangle &NextCharacterRec);
 private:
 };

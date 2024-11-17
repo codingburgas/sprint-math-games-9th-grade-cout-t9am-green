@@ -27,6 +27,7 @@ void Map::Draw() {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
 			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
 		}
+		deskHitboxes = initializeDesksHitboxes(0, 0);
 		break;
 	default:
 		DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
@@ -37,11 +38,7 @@ void Map::Draw() {
 			deskHitboxes = initializeDesksHitboxes(2, 5);
 			for (int i = 0; i < deskHitboxes.size(); i++) {
 				for (int j = 0; j < deskHitboxes[0].size(); j++)
-					DrawRectangleLinesEx(deskHitboxes[i][j], 1, BLACK);
-			}
-			for (int i = 0; i < deskHitboxes.size(); i++) {
-				for (int j = 0; j < deskHitboxes[0].size(); j++)
-					DrawTexture(deskTexture, deskHitboxes[i][j].x, deskHitboxes[i][j].y, WHITE);
+					DrawTexture(deskTexture, deskHitboxes[i][j].x - 15, deskHitboxes[i][j].y, WHITE);
 			}
 			break;
 		}
@@ -85,8 +82,7 @@ int Map::CheckWhichDoorIsColliding(Rectangle collidingObject)
 	return 0;
 }
 
-//Changes the current room texture and the currentRoomID and also oves the character so that he is next to the current
-//door
+//Changes the current room texture and the currentRoomID and also oves the character so that he is next to the current door
 void Map::ChangeTheRoom(int doorNumber, Rectangle &Character)
 {
 
@@ -178,8 +174,10 @@ void Map::TrackCharacter(Rectangle character) {
 	}
 }
 
-void Map::TeacherHitbox(Rectangle& collidingObject) {
-	teacher.Hitbox(collidingObject);
+// Calls the hitbox function from the teacher.h file to pass it needed values
+void Map::TeacherHitbox(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
+	if (currentRoomID != 1)
+	teacher.Hitbox(CharacterCurrentRec, CharacterNextRec);
 }
 
 //Initializes the vector with the hitboxes of the doors in the hall
@@ -202,16 +200,30 @@ vector<Texture2D> Map::initializeDoorsTextures(int numberOfDoors)
 	return textures;
 }
 
+// Initializes the hitboxes of all the desks
 vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 {
-	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10, (float)mapHitbox.upperBound.height + 90, (float)deskTexture.width, deskTexture.height };
+	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10, (float)mapHitbox.upperBound.height + 90, (float)deskTexture.width, deskTexture.height - 5 };
 	vector<vector<Rectangle>> hitboxes;
 
 	for (int i = 0; i < rows; i++) {
-			hitboxes.push_back({});
+		hitboxes.push_back({});
 		for (int j = 0; j < columns; j++)
-			hitboxes[i].push_back({(float)firstDesk.x + deskTexture.width * j + j * 35, (float)firstDesk.y, (float)deskTexture.width, (float)deskTexture.height});
+			hitboxes[i].push_back({(float)firstDesk.x + deskTexture.width * j + j * 45 + 15.f, (float)firstDesk.y + 5, (float)deskTexture.width - 20.f, (float)deskTexture.height - 30});
 		firstDesk.y += firstDesk.height + 40;
 	}
 	return hitboxes;
+}
+
+// Checks for collisions between the player and any of the desks
+void Map::DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
+	bool CharacterIsColliding = false;
+	for (int row = 0; row < deskHitboxes.size(); row++) {
+		for (int column = 0; column < deskHitboxes[0].size(); column++) {
+			if (CheckCollisionRecs(CharacterNextRec, deskHitboxes[row][column]))
+				CharacterIsColliding = true;
+		}
+	}
+	if (CharacterIsColliding)
+		CharacterNextRec = CharacterCurrentRec;
 }

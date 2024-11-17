@@ -6,35 +6,22 @@ MapHitbox::MapHitbox() {
 	rightBound = { upperBound.width, 0.f, 56.f, 500.f };
 	bottomBound = { 0.f, leftBound.height - 52, upperBound.width, 52.f };
 }
-//Here a reference is used to change the actual position of the colliding object (the character) and not of its copy.
-void MapHitbox::CheckForColliding(Rectangle &collidingObject) { 
-	bool isCollidingUp = false;									
-	bool isCollidingLeft = false;								
-	bool isCollidingRight = false;
-	bool isCollidingDown = false;
-	int characterSpeed = 13;
+// Checks for collisions with the map border and changes the player position
+void MapHitbox::CheckForColliding(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
+	bool isColliding = false;
 
-	if (CheckCollisionRecs(upperBound, collidingObject))
-		isCollidingUp = true;
+	if (CheckCollisionRecs(upperBound, CharacterNextRec))
+		isColliding = true;
 
-	if (CheckCollisionRecs(leftBound, collidingObject))
-		isCollidingLeft = true;
+	if (CheckCollisionRecs(leftBound, CharacterNextRec))
+		isColliding = true;
 
-	if (CheckCollisionRecs(rightBound, collidingObject))
-		isCollidingRight = true;
+	if (CheckCollisionRecs(rightBound, CharacterNextRec))
+		isColliding = true;
 
-	if (CheckCollisionRecs(bottomBound, collidingObject))
-		isCollidingDown = true;
+	if (CheckCollisionRecs(bottomBound, CharacterNextRec))
+		isColliding = true;
 
-	if (isCollidingUp)
-		collidingObject.y += characterSpeed;
-
-	if (isCollidingLeft)
-		collidingObject.x += characterSpeed;
-
-	if (isCollidingRight)
-		collidingObject.x -= characterSpeed;
-
-	if (isCollidingDown)
-		collidingObject.y -= characterSpeed;
+	if (isColliding)
+		CharacterNextRec = CharacterCurrentRec;
 }

@@ -6,19 +6,24 @@
 class Character {
 public:
 	Character();
-	//Draws the character on the screen
+	// Draws the character on the screen
 	void Draw();
-	//Updates the position of the character
+	// Updates the position of the character 
 	void Update(float x, float y);
-	//Returns the hitbox of the character
+	// Returns the hitbox of the character
 	Rectangle getTextureRect();
+	// Returns the hitbox of the character after one step
+	Rectangle getCharacterNextRect();
+	// Draws the character health on the screen
+	void drawHealth();
 	//Contains the position where the character is drawn
 	Vector2 position;
+	// Texture of one heart (For the character heealth)
 	Texture2D heartTexture;
+	// The current health of the character
 	int health;
-	int getCharacterHealth();
-	void drawHealth();
 private:
+	// Character's speed
 	int speed;
 	//Contains the spritesheet file of the character
 	Texture2D movingRight;      

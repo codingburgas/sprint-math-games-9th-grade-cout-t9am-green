@@ -3,36 +3,39 @@
 Character::Character() {
 	source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 	speed = 13;
+	// The next 4 lines load the textures of the character spritesheet
 	movingRight = LoadTexture("Graphics/spriteRight.png");
 	movingLeft = LoadTexture("Graphics/spriteLeft.png");
 	movingUp = LoadTexture("Graphics/spriteUp.png");
-	movingDown = LoadTexture("Graphics/spriteDown.png"); 
+	movingDown = LoadTexture("Graphics/spriteDown.png");
 	heartTexture = LoadTexture("Graphics/heart.png");
-	position = { 100.f, 0.f };
+	// The character's initial position
+	position = { 100.f, 150.f};
 	frame = 0;
-	health = getCharacterHealth();
+	// The character's initial health
+	health = 3;
 
 }
 
+// Draws the updated position of the character
 void Character::Draw() {
-	if (IsKeyDown(KEY_D)) {
+	if (IsKeyDown(KEY_D)) { // When moving right
 		DrawTextureRec(movingRight, source, position, WHITE);
 	}
-	else if (IsKeyDown(KEY_A)) {
+	else if (IsKeyDown(KEY_A)) {// When moving left
 		DrawTextureRec(movingLeft, source, position, WHITE);
 	}
-	else if (IsKeyDown(KEY_W)) {
+	else if (IsKeyDown(KEY_W)) {// When moving up
 		DrawTextureRec(movingUp, source, position, WHITE);
 	}
-	else if (IsKeyDown(KEY_S)) {
+	else if (IsKeyDown(KEY_S)) {// When moving down
 		DrawTextureRec(movingDown, source, position, WHITE);
 	}
-	else {
+	else {// When not moving 
 		DrawTextureRec(movingDown, source, position, WHITE);
 	}
 }
-// These x and y variables will change only when the character is trying to walk through the wall (look at the Update()
-// function in the game.cpp file and at the CheckForColliding function in the mapHitbox.cpp file.
+// These x and y variables will be equal to the x and y coordinates of the hitbox of the character after one step.
 void Character::Update(float x, float y) { 
 	position.x = x;						   
 	position.y = y;						   
@@ -43,7 +46,7 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingRight.width / 4.f, (float)movingRight.height };
 		source.x = (float)frame * source.width;
-		position.x += speed;
+		position.x;
 		WaitTime(updateTime);
 	}
 	// Moving left
@@ -51,7 +54,7 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingLeft.width / 4.f, (float)movingLeft.height };
 		source.x = (float)frame * source.width;
-		position.x -= speed;
+		position.x;
 		WaitTime(updateTime);
 	}
 	// Moving up
@@ -59,7 +62,7 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingUp.width / 4.f, (float)movingUp.height };
 		source.x = (float)frame * source.width;
-		position.y -= speed;
+		position.y;
 		WaitTime(updateTime);
 	}
 	// Moving down
@@ -67,7 +70,7 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 		source.x = (float)frame * source.width;
-		position.y += speed;
+		position.y;
 		WaitTime(updateTime);
 	}
 	// Not moving
@@ -77,15 +80,28 @@ void Character::Update(float x, float y) {
 	}
 }
 
+// Returns the current position of the character hitbox
 Rectangle Character::getTextureRect() {
 	return Rectangle{ position.x, position.y, source.width, source.height };
 }
 
-int Character::getCharacterHealth()
-{
-	return 3;
+// Returns the position of the character hitbox after he makes one step
+Rectangle Character::getCharacterNextRect() {
+	Rectangle CharacterCurrentRect = getTextureRect();
+
+	if (IsKeyDown(KEY_A))
+		CharacterCurrentRect.x -= speed;
+	else if (IsKeyDown(KEY_D))
+		CharacterCurrentRect.x += speed;	
+	else if (IsKeyDown(KEY_W))
+		CharacterCurrentRect.y -= speed;
+	else if (IsKeyDown(KEY_S))
+		CharacterCurrentRect.y += speed;
+
+	return CharacterCurrentRect;
 }
 
+// Draws the character health on the screen
 void Character::drawHealth()
 {
 	for (int i = 0; i < health; i++)

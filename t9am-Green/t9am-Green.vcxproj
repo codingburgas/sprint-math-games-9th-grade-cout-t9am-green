@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapHItbox.cpp" />
@@ -23,7 +22,6 @@
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="hitbox.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapHItbox.h" />
     <ClInclude Include="menu.h" />

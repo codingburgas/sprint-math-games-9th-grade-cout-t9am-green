@@ -1,32 +1,25 @@
 #include "teacher.h"
+#include <iostream>
+using namespace std;
 
 Teacher::Teacher()
 {
 	texture = LoadTexture("Graphics/TeacherTexture.png");
-	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2, (float)GetScreenHeight() / 2, (float)texture.width, (float)texture.height };
-	initializeHitboxBounds(hitbox);
+	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2 + 100, (float)GetScreenHeight() / 2, (float)texture.width, (float)texture.height };
 }
 
+// Draws the teacher in the screen
 void Teacher::Draw()
 {
-	DrawTexture(texture, GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2, GetScreenHeight() / 2, WHITE);
+	DrawTexture(texture, hitbox.x, hitbox.y, WHITE);
 }
 
-void Teacher::initializeHitboxBounds(Rectangle hitbox) {
-	hitboxBounds[0] = hitboxBoundUp(hitbox);
-	hitboxBounds[1] = hitboxBoundRight(hitbox);
-	hitboxBounds[2] = hitboxBoundDown(hitbox);
-	hitboxBounds[3] = hitboxBoundLeft(hitbox);
+// Handles the teacher hitbox and its collisions with the player
+void Teacher::Hitbox(Rectangle& CharacterCurrentRec, Rectangle& NextCharacterRec) {
+	if (CheckCollisionRecs(NextCharacterRec, hitbox)) {
+		NextCharacterRec = CharacterCurrentRec;
+		
+	}
 }
 
-void Teacher::Hitbox(Rectangle& collidingObject) {
-	int characterSpeed = 13;
-	if (CheckCollisionRecs(collidingObject, hitboxBounds[0]))
-		collidingObject.y -= characterSpeed;
-	else if (CheckCollisionRecs(collidingObject, hitboxBounds[1]))
-		collidingObject.x += characterSpeed;
-	else if (CheckCollisionRecs(collidingObject, hitboxBounds[2]))
-		collidingObject.y += characterSpeed;
-	else if (CheckCollisionRecs(collidingObject, hitboxBounds[3]))
-		collidingObject.x -= characterSpeed;
-}
+
