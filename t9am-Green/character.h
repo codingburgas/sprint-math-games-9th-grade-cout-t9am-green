@@ -3,37 +3,28 @@
 #include <time.h>
 #include "mapHItbox.h"
 
+// Class with all the needed variables and functions to draw and update the character
 class Character {
 public:
 	Character();
-	// Draws the character on the screen
 	void Draw();
-	// Updates the position of the character 
 	void Update(float x, float y);
-	// Returns the hitbox of the character
 	Rectangle getTextureRect();
 	// Returns the hitbox of the character after one step
 	Rectangle getCharacterNextRect();
-	// Draws the character health on the screen
 	void drawHealth();
-	//Contains the position where the character is drawn
 	Vector2 position;
-	// Texture of one heart (For the character heealth)
 	Texture2D heartTexture;
-	// The current health of the character
 	int health;
 private:
-	// Character's speed
 	int speed;
-	//Contains the spritesheet file of the character
 	Texture2D movingRight;      
 	Texture2D movingLeft;
 	Texture2D movingUp;
 	Texture2D movingDown;
-	//Contains the number of the current frame
 	int frame;
 	//Contains the part of the spritesheet with the current frame
 	Rectangle source;
-	//The time between two frames
+	//The time between two frames (delta time)
 	const float updateTime{1.f/12.f};
 };

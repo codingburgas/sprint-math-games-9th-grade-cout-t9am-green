@@ -1,14 +1,13 @@
 #pragma once
 #include <raylib.h>
+
+// Class that will draw and update all the menus in the game
 class Menu {
 public:
 	Menu();
 	Rectangle playButton;
 	Rectangle exitButton;
-	// Draws the menu
 	void Draw();
-	// Checks if the player clicks on the play button
 	bool CheckIfPlayIsClicked();
-	// Checks if the player clicks on the exit button
 	bool CheckIfExitIsClicked();
 };

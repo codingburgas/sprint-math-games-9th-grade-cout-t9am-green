@@ -3,7 +3,6 @@
 Character::Character() {
 	source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 	speed = 13;
-	// The next 4 lines load the textures of the character spritesheet
 	movingRight = LoadTexture("Graphics/spriteRight.png");
 	movingLeft = LoadTexture("Graphics/spriteLeft.png");
 	movingUp = LoadTexture("Graphics/spriteUp.png");

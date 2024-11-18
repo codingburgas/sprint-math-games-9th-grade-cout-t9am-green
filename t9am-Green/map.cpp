@@ -3,19 +3,14 @@
 Map::Map() {
 	hallPositionOffset = 0;
 	hallXPosition = 0;
-	//It's one because by default the character appears in the hall which ID is 1w
 	currentRoomID = 1;
-	//Contains the texture of the current room
 	CurrentRoomTexture = rooms[0];
 	doorNotCollidingTexture = LoadTexture("Graphics/Door.png");
 	doorCollidingTexture = LoadTexture("Graphics/DoorColliding.png");
 	doorCurrentTexture = doorNotCollidingTexture;
-	//The hitbox of the door when the character is in one of the classrooms
 	doorInRoomHitbox = { 170, 70, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
 	deskTexture = LoadTexture("Graphics/desk.png");
-	//The hitboxes of the doors in the hall
 	doorsInHallHitboxes = initializeDoorsHitboxes(5);
-	//We need a different texture for each door so we can update only one of them when the character is colliding with it
 	doorsInHallTextures = initializeDoorsTextures(5);
 }
 
