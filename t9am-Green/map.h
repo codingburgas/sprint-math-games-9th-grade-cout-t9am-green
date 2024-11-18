@@ -16,11 +16,13 @@ public:
 	void ChangeTheRoom(int DoorNumber, Rectangle &Character);
 	void CheckIfDoorIsUsed(Rectangle &character);
 	void TrackCharacter(Rectangle character);
-	void TeacherHitbox(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec);
+	void TeacherHitbox(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	vector <Rectangle> initializeDoorsHitboxes(int numberOfDoors);
 	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
 	vector<vector <Rectangle>> initializeDesksHitboxes(int rows, int columns);
-	void DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec);
+	vector<Rectangle> initializeBookshelvesHitboxes(int numberOfBookshelves);
+	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
+	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 
 	//The hall position along X axis. It is in a separated variable because it will change as the character is moving in the hall 
 	int hallXPosition;
@@ -31,11 +33,13 @@ public:
 	Texture2D doorCollidingTexture;
 	Texture2D doorCurrentTexture;
 	Texture2D deskTexture;
+	Texture2D bookshelfTexture;
 	// The hitbox of the classroom door
 	Rectangle doorInRoomHitbox;
 	vector<vector<Rectangle>> deskHitboxes;
 	vector<Rectangle> doorsInHallHitboxes;
 	vector<Texture2D> doorsInHallTextures;
+	vector<Rectangle> bookShelvesHitboxes;
 	MapHitbox mapHitbox;
 	Teacher teacher;
 private:

@@ -7,11 +7,13 @@ Map::Map() {
 	CurrentRoomTexture = rooms[0];
 	doorNotCollidingTexture = LoadTexture("Graphics/Door.png");
 	doorCollidingTexture = LoadTexture("Graphics/DoorColliding.png");
-	doorCurrentTexture = doorNotCollidingTexture;
-	doorInRoomHitbox = { 170, 70, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
 	deskTexture = LoadTexture("Graphics/desk.png");
+	doorCurrentTexture = doorNotCollidingTexture;
+	bookshelfTexture = LoadTexture("Graphics/BookShelf.png");
+	doorInRoomHitbox = { 170, 70, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
 	doorsInHallHitboxes = initializeDoorsHitboxes(5);
 	doorsInHallTextures = initializeDoorsTextures(5);
+	bookShelvesHitboxes = initializeBookshelvesHitboxes(4);
 }
 
 //Draws different rooms according to the currentRoomID variable
@@ -22,6 +24,12 @@ void Map::Draw() {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
 			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
 		}
+		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
+			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x, bookShelvesHitboxes[i].y, WHITE);
+		}
+		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
+			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x + bookshelfTexture.width + 10, bookShelvesHitboxes[i].y, WHITE);
+		}
 		deskHitboxes = initializeDesksHitboxes(0, 0);
 		break;
 	default:
@@ -31,6 +39,7 @@ void Map::Draw() {
 		{
 		case 2:
 			deskHitboxes = initializeDesksHitboxes(2, 5);
+			bookShelvesHitboxes = initializeBookshelvesHitboxes(0);
 			for (int i = 0; i < deskHitboxes.size(); i++) {
 				for (int j = 0; j < deskHitboxes[0].size(); j++)
 					DrawTexture(deskTexture, deskHitboxes[i][j].x - 15, deskHitboxes[i][j].y, WHITE);
@@ -154,6 +163,8 @@ void Map::TrackCharacter(Rectangle character) {
 				hallXPosition += 13;
 				for (int i = 0; i < doorsInHallHitboxes.size(); i++)
 					doorsInHallHitboxes[i].x += 13;
+				for (int i = 0; i < bookShelvesHitboxes.size(); i++)
+					bookShelvesHitboxes[i].x += 13;
 				hallPositionOffset -= 13;
 			}
 		}
@@ -163,6 +174,8 @@ void Map::TrackCharacter(Rectangle character) {
 				hallXPosition -= 13;
 				for (int i = 0; i < doorsInHallHitboxes.size(); i++)
 					doorsInHallHitboxes[i].x -= 13;
+				for (int i = 0; i < bookShelvesHitboxes.size(); i++)
+					bookShelvesHitboxes[i].x -= 13;
 				hallPositionOffset += 13;
 			}
 		}
@@ -210,6 +223,19 @@ vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 	return hitboxes;
 }
 
+vector<Rectangle> Map::initializeBookshelvesHitboxes(int numberOfBookshelves) {
+
+	Rectangle firstHitbox = { doorInRoomHitbox.x + doorNotCollidingTexture.width + 250 - bookshelfTexture.width - 5, doorInRoomHitbox.y - 10, bookshelfTexture.width, bookshelfTexture.height - 35 };
+	vector <Rectangle> hitboxes;
+
+	for (int i = 0; i < numberOfBookshelves; i++) {
+		hitboxes.push_back({ firstHitbox.x + 500 * i - 25, firstHitbox.y, firstHitbox.width*2 + 10, firstHitbox.height });
+		
+	}
+
+	return hitboxes;
+}
+
 // Checks for collisions between the player and any of the desks
 void Map::DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
 	bool CharacterIsColliding = false;
@@ -219,6 +245,17 @@ void Map::DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNext
 				CharacterIsColliding = true;
 		}
 	}
+	if (CharacterIsColliding)
+		CharacterNextRec = CharacterCurrentRec;
+}
+
+void Map::BookshelvesHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
+	bool CharacterIsColliding = false;
+	for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
+		if (CheckCollisionRecs(CharacterNextRec, bookShelvesHitboxes[i]))
+			CharacterIsColliding = true;
+	}
+	
 	if (CharacterIsColliding)
 		CharacterNextRec = CharacterCurrentRec;
 }

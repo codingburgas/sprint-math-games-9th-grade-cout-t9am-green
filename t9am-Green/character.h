@@ -13,7 +13,7 @@ public:
 	// Returns the hitbox of the character after one step
 	Rectangle getCharacterNextRect();
 	void drawHealth();
-	Vector2 position;
+	Vector2  position;
 	Texture2D heartTexture;
 	int health;
 private:

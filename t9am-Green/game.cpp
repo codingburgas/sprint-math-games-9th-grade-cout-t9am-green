@@ -22,6 +22,7 @@ void Game::Update() {
 
 		mapHitbox.CheckForColliding(CharacterRec, NextCharacterRec);
 		map.DesksHitboxes(CharacterRec, NextCharacterRec);
+		map.BookshelvesHitboxes(CharacterRec, NextCharacterRec);
 		map.TeacherHitbox(CharacterRec, NextCharacterRec);
 		character.Update(NextCharacterRec.x, NextCharacterRec.y);
 		map.TrackCharacter(CharacterRec);

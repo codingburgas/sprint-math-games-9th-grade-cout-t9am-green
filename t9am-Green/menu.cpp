@@ -33,3 +33,4 @@ bool Menu::CheckIfExitIsClicked()
 	else
 		return 0;
 }
+
