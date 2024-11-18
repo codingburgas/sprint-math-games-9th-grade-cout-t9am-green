@@ -17,4 +17,5 @@ private:
 	MapHitbox mapHitbox;
 	Menu menu;
 	bool MenuClosed;
+	bool MenuToInteractOpened;
 };

@@ -3,8 +3,9 @@
 using namespace std;
 
 Game::Game() {
-	MenuClosed = 0;
-	exitGame = 0;
+	MenuClosed = false;
+	exitGame = false;
+	MenuToInteractOpened = false;
 }
 
 void Game::Update() {
@@ -24,6 +25,9 @@ void Game::Update() {
 		map.TeacherHitbox(CharacterRec, NextCharacterRec);
 		character.Update(NextCharacterRec.x, NextCharacterRec.y);
 		map.TrackCharacter(CharacterRec);
+		map.teacher.CheckIfInteracting(CharacterRec, MenuToInteractOpened);
+		if (MenuToInteractOpened)
+			cout << "FLAG" << endl;
 	}
 }
 

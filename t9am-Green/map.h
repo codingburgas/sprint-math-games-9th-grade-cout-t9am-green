@@ -9,6 +9,7 @@ using namespace std;
 class Map {
 public:
 	Map();
+
 	void Draw();
 	void UpdateDoor(Rectangle CollidingObject);
 	int CheckWhichDoorIsColliding(Rectangle collidingObject);
@@ -20,6 +21,7 @@ public:
 	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
 	vector<vector <Rectangle>> initializeDesksHitboxes(int rows, int columns);
 	void DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec);
+
 	//The hall position along X axis. It is in a separated variable because it will change as the character is moving in the hall 
 	int hallXPosition;
 	int hallPositionOffset;
@@ -35,6 +37,7 @@ public:
 	vector<Rectangle> doorsInHallHitboxes;
 	vector<Texture2D> doorsInHallTextures;
 	MapHitbox mapHitbox;
+	Teacher teacher;
 private:
 	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
 	int currentRoomID;
@@ -42,5 +45,4 @@ private:
      LoadTexture("Graphics/hall.png"),
 	 LoadTexture("Graphics/room.png")
 	};
-	Teacher teacher;
 };
