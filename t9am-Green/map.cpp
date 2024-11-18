@@ -24,6 +24,7 @@ void Map::Draw() {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
 			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
 		}
+		bookShelvesHitboxes = initializeBookshelvesHitboxes(4);
 		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
 			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x, bookShelvesHitboxes[i].y, WHITE);
 		}
