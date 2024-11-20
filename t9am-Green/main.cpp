@@ -1,8 +1,6 @@
 #include "raylib.h"
 #include "game.h"
 
-using namespace std;
-
 int main() {
 	// Initializes the window
 	InitWindow(900, 500, "test");

@@ -24,11 +24,8 @@ void Map::Draw() {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
 			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
 		}
-		bookShelvesHitboxes = initializeBookshelvesHitboxes(4);
 		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
 			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x, bookShelvesHitboxes[i].y, WHITE);
-		}
-		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
 			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x + bookshelfTexture.width + 10, bookShelvesHitboxes[i].y, WHITE);
 		}
 		deskHitboxes = initializeDesksHitboxes(0, 0);
@@ -40,7 +37,6 @@ void Map::Draw() {
 		{
 		case 2:
 			deskHitboxes = initializeDesksHitboxes(2, 5);
-			bookShelvesHitboxes = initializeBookshelvesHitboxes(0);
 			for (int i = 0; i < deskHitboxes.size(); i++) {
 				for (int j = 0; j < deskHitboxes[0].size(); j++)
 					DrawTexture(deskTexture, deskHitboxes[i][j].x - 15, deskHitboxes[i][j].y, WHITE);
@@ -224,6 +220,7 @@ vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 	return hitboxes;
 }
 
+// Initializes the bookshelves hitboxes automatically
 vector<Rectangle> Map::initializeBookshelvesHitboxes(int numberOfBookshelves) {
 
 	Rectangle firstHitbox = { doorInRoomHitbox.x + doorNotCollidingTexture.width + 250 - bookshelfTexture.width - 5, doorInRoomHitbox.y - 10, bookshelfTexture.width, bookshelfTexture.height - 35 };
@@ -250,10 +247,11 @@ void Map::DesksHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNext
 		CharacterNextRec = CharacterCurrentRec;
 }
 
+// Handles the collisions between the player and the bookshelves
 void Map::BookshelvesHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec) {
 	bool CharacterIsColliding = false;
 	for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
-		if (CheckCollisionRecs(CharacterNextRec, bookShelvesHitboxes[i]))
+		if (CheckCollisionRecs(CharacterNextRec, bookShelvesHitboxes[i]) and currentRoomID == 1)
 			CharacterIsColliding = true;
 	}
 	

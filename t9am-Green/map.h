@@ -24,6 +24,8 @@ public:
 	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 
+	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
+	int currentRoomID;
 	//The hall position along X axis. It is in a separated variable because it will change as the character is moving in the hall 
 	int hallXPosition;
 	int hallPositionOffset;
@@ -43,8 +45,6 @@ public:
 	MapHitbox mapHitbox;
 	Teacher teacher;
 private:
-	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
-	int currentRoomID;
 	vector <Texture2D> rooms = {
      LoadTexture("Graphics/hall.png"),
 	 LoadTexture("Graphics/room.png")

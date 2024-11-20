@@ -10,22 +10,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
+<ItemGroup>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapHItbox.cpp" />
+    <ClCompile Include="MathProblems.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="teacher.cpp" />
+    <ClCompile Include="textBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapHItbox.h" />
+    <ClInclude Include="MathProblems.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="teacher.h" />
+    <ClInclude Include="textBox.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3E81E7B3-2A39-2901-9340-025D7F17C4F1}</ProjectGuid>
