@@ -55,3 +55,8 @@ void TextBox::UpdateTheText() {
 		text[letterCounter] = '\0';
 	}
 }
+
+void TextBox::ClearText() {
+	text[0] = '\0';
+	letterCounter = 0;
+}

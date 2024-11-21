@@ -15,13 +15,17 @@ public:
 	Rectangle interactionMenu;
 	Rectangle submitButton;
 	Rectangle interactionCloseButton;
+	Rectangle gameWinWindow;
+	Rectangle gameWinCloseButton;
 	TextBox textBox;
 	void Draw();
 	void DrawInteractionMenu();
 	void ShowRandomProblem(map <string, string> RandomProblem);
+	void DrawWinWindow();
 	bool CheckIfPlayIsClicked();
 	bool CheckIfExitIsClicked();
 	bool CheckIfInteractionClosed();
 	bool IsCheckClicked();
+	bool CheckIfWinCloseClicked();
 
 };

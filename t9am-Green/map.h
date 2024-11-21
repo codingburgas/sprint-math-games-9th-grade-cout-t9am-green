@@ -23,6 +23,7 @@ public:
 	vector<Rectangle> initializeBookshelvesHitboxes(int numberOfBookshelves);
 	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
+	void CheckIfLevelPassed(int currentLevel, int teacherHealth);
 
 	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
 	int currentRoomID;
@@ -36,17 +37,20 @@ public:
 	Texture2D doorCurrentTexture;
 	Texture2D deskTexture;
 	Texture2D bookshelfTexture;
+	Texture2D lockedPadlock = LoadTexture("Graphics/lockTextureClosed.png");
+	Texture2D unlockedPadlock = LoadTexture("Graphics/lockTextureOpened.png");
 	// The hitbox of the classroom door
 	Rectangle doorInRoomHitbox;
 	vector<vector<Rectangle>> deskHitboxes;
 	vector<Rectangle> doorsInHallHitboxes;
 	vector<Texture2D> doorsInHallTextures;
 	vector<Rectangle> bookShelvesHitboxes;
+	vector <bool> isEachLevelPassed;
 	MapHitbox mapHitbox;
 	Teacher teacher;
 private:
 	vector <Texture2D> rooms = {
-     LoadTexture("Graphics/hall.png"),
+	 LoadTexture("Graphics/hall.png"),
 	 LoadTexture("Graphics/room.png")
 	};
 };

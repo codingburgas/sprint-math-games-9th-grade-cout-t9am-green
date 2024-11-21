@@ -24,7 +24,8 @@ void Game::Update() {
 			map.DesksHitboxes(CharacterRec, NextCharacterRec);
 			map.BookshelvesHitboxes(CharacterRec, NextCharacterRec);
 			map.TeacherHitbox(CharacterRec, NextCharacterRec);
-			character.Update(NextCharacterRec.x, NextCharacterRec.y);
+			if (!MenuToInteractOpened)
+				character.Update(NextCharacterRec.x, NextCharacterRec.y);
 			map.TrackCharacter(CharacterRec);
 			map.teacher.CheckIfInteracting(CharacterRec, MenuToInteractOpened);
 			if (MenuToInteractOpened) {
@@ -72,7 +73,7 @@ int Game::IsProblemSolved(string currentProblem) {
 	return 0;
 }
 
-// Takes damage on the player or teacher whether the math problem is solved correctrly
+// Takes damage on the player or teacher whether the math problem is solved correctly
 void Game::DamagePlayerOrTeacher(int problemCorrect) {
 	if (problemCorrect == 1)
 		character.health--;
@@ -81,18 +82,23 @@ void Game::DamagePlayerOrTeacher(int problemCorrect) {
 		{
 		case 1:
 			map.teacher.healthTeacher1--;
+			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher1);
 			break;
 		case 2:
 			map.teacher.healthTeacher2--;
+			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher2);
 			break;
 		case 3:
 			map.teacher.healthTeacher3--;
+			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher3);
 			break;
 		case 4:
 			map.teacher.healthTeacher4--;
+			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher4);
 			break;
 		case 5:
 			map.teacher.healthTeacher5--;
+			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher5);
 			break;
 		}
 	}
@@ -111,62 +117,66 @@ void Game::Draw() {
 
 	if (MenuToInteractOpened) {
 		menu.DrawInteractionMenu();
-		DrawText("Your health:", menu.interactionMenu.x + 4, menu.interactionMenu.y + 4, 25, WHITE);
+		DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
 		for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-			DrawTexture(character.heartTexture, menu.interactionMenu.x + 5 + playerHealth*character.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
-		
+			DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth*character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+		DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
 		// Show different math problems according to the current room (level)
 		switch (map.currentRoomID - 1) {
 		case 1:
-			DrawText("Teacher's health:", menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 100, menu.interactionMenu.y + 4, 25, WHITE);
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher1; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, (menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 10) + teacherHealth * map.teacher.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem1);
 			if (menu.IsCheckClicked()) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem1)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
+				menu.textBox.ClearText();
 			}
 			break;
 		case 2:
-			DrawText("Teacher's health:", menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 100, menu.interactionMenu.y + 4, 25, WHITE);
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher2; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, (menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 10) + teacherHealth * map.teacher.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem2);
 			if (menu.IsCheckClicked()) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem2)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
+				menu.textBox.ClearText();
 			}
 			break;
 		case 3:
-			DrawText("Teacher's health:", menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 100, menu.interactionMenu.y + 4, 25, WHITE);
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher3; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, (menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 10) + teacherHealth * map.teacher.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem3);
 			if (menu.IsCheckClicked()) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem3)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
+				menu.textBox.ClearText();
 			}
 			break;
 		case 4:
-			DrawText("Teacher's health:", menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 100, menu.interactionMenu.y + 4, 25, WHITE);
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher4; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, (menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 10) + teacherHealth * map.teacher.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem4);
 			if (menu.IsCheckClicked()) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem4)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
+				menu.textBox.ClearText();
 			}
 			break;
 		case 5:
-			DrawText("Teacher's health:", menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 100, menu.interactionMenu.y + 4, 25, WHITE);
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher5; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, (menu.interactionMenu.x + menu.interactionMenu.width - 3 * map.teacher.heartTexture.width - 10) + teacherHealth * map.teacher.heartTexture.width, menu.interactionMenu.y + 30, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem5);
 			if (menu.IsCheckClicked()) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem5)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
+				menu.textBox.ClearText();
 			}
-			break;	
+			break;
+		}
+		if (map.isEachLevelPassed[5]) {
+			menu.DrawWinWindow();
+			exitGame = menu.CheckIfWinCloseClicked();
 		}
 	}
 }

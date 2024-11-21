@@ -10,10 +10,18 @@ Map::Map() {
 	deskTexture = LoadTexture("Graphics/desk.png");
 	doorCurrentTexture = doorNotCollidingTexture;
 	bookshelfTexture = LoadTexture("Graphics/BookShelf.png");
-	doorInRoomHitbox = { 170, 70, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
+	doorInRoomHitbox = { 170.f, 70.f, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
 	doorsInHallHitboxes = initializeDoorsHitboxes(5);
 	doorsInHallTextures = initializeDoorsTextures(5);
 	bookShelvesHitboxes = initializeBookshelvesHitboxes(4);
+	isEachLevelPassed = {
+		true,
+		false,
+		false,
+		false,
+		false,
+		false
+	};
 }
 
 //Draws different rooms according to the currentRoomID variable
@@ -22,26 +30,26 @@ void Map::Draw() {
 	case 1:
 		DrawTexture(CurrentRoomTexture, hallXPosition, 0, WHITE);
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
-			DrawTexture(doorsInHallTextures[i], doorsInHallHitboxes[i].x, doorsInHallHitboxes[i].y, WHITE);
+			DrawTexture(doorsInHallTextures[i], (int)doorsInHallHitboxes[i].x, (int)doorsInHallHitboxes[i].y, WHITE);
+			if (isEachLevelPassed[i])
+				DrawTexture(unlockedPadlock, (int)doorsInHallHitboxes[i].x - (int)unlockedPadlock.width - 5, (int)doorsInHallHitboxes[i].y, WHITE);
+			else
+				DrawTexture(lockedPadlock, (int)doorsInHallHitboxes[i].x - (int)unlockedPadlock.width - 5, (int)doorsInHallHitboxes[i].y, WHITE);
 		}
 		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
-			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x, bookShelvesHitboxes[i].y, WHITE);
-			DrawTexture(bookshelfTexture, bookShelvesHitboxes[i].x + bookshelfTexture.width + 10, bookShelvesHitboxes[i].y, WHITE);
+			DrawTexture(bookshelfTexture, (int)bookShelvesHitboxes[i].x, (int)bookShelvesHitboxes[i].y, WHITE);
+			DrawTexture(bookshelfTexture, (int)bookShelvesHitboxes[i].x + (int)bookshelfTexture.width + 10, (int)bookShelvesHitboxes[i].y, WHITE);
 		}
 		deskHitboxes = initializeDesksHitboxes(0, 0);
 		break;
 	default:
 		DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
-		DrawTexture(doorCurrentTexture, doorInRoomHitbox.x, doorInRoomHitbox.y, WHITE);
-		switch (currentRoomID)
-		{
-		case 2:
-			deskHitboxes = initializeDesksHitboxes(2, 5);
-			for (int i = 0; i < deskHitboxes.size(); i++) {
-				for (int j = 0; j < deskHitboxes[0].size(); j++)
-					DrawTexture(deskTexture, deskHitboxes[i][j].x - 15, deskHitboxes[i][j].y, WHITE);
-			}
-			break;
+		DrawTexture(doorCurrentTexture, (int)doorInRoomHitbox.x, (int)doorInRoomHitbox.y, WHITE);
+
+		deskHitboxes = initializeDesksHitboxes(2, 5);
+		for (int i = 0; i < deskHitboxes.size(); i++) {
+			for (int j = 0; j < deskHitboxes[0].size(); j++)
+				DrawTexture(deskTexture, (int)deskHitboxes[i][j].x - 15, (int)deskHitboxes[i][j].y, WHITE);
 		}
 		teacher.Draw();
 	}
@@ -52,8 +60,8 @@ void Map::UpdateDoor(Rectangle CollidingObject)
 {
 	if (currentRoomID == 1) {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
-			if (CheckCollisionRecs(CollidingObject, doorsInHallHitboxes[i]))
-				doorsInHallTextures[i] = doorCollidingTexture;
+			if (CheckCollisionRecs(CollidingObject, doorsInHallHitboxes[i]) and isEachLevelPassed[i])
+					doorsInHallTextures[i] = doorCollidingTexture;
 			else
 				doorsInHallTextures[i] = doorNotCollidingTexture;
 		}
@@ -83,10 +91,10 @@ int Map::CheckWhichDoorIsColliding(Rectangle collidingObject)
 	return 0;
 }
 
-//Changes the current room texture and the currentRoomID and also oves the character so that he is next to the current door
+//Changes the current room texture and the currentRoomID and also moves the character so that he is next to the current door
 void Map::ChangeTheRoom(int doorNumber, Rectangle &Character)
 {
-
+	
 	switch (currentRoomID)
 	{
 	case 1:
@@ -140,7 +148,7 @@ void Map::ChangeTheRoom(int doorNumber, Rectangle &Character)
 void Map::CheckIfDoorIsUsed(Rectangle& character)
 {
 	int doorNumber = CheckWhichDoorIsColliding(character);
-	if (doorNumber != 0 and IsKeyPressed(KEY_E)) {
+	if (doorNumber != 0 and IsKeyPressed(KEY_E) and isEachLevelPassed[doorNumber - 1]) {
 		ChangeTheRoom(doorNumber, character);
 	}
 	
@@ -167,7 +175,7 @@ void Map::TrackCharacter(Rectangle character) {
 		}
 		//Moves the hall right if the player tries to go left
 		else if (CheckCollisionRecs(character, rightBoundForTracking) and IsKeyDown(KEY_D)) {
-			if (hallPositionOffset < rooms[0].width - (mapHitbox.rightBound.width + 30 + (GetScreenWidth() - mapHitbox.leftBound.width))) {
+			if (hallPositionOffset < rooms[0].width - ((float)mapHitbox.rightBound.width + 30 + (GetScreenWidth() - mapHitbox.leftBound.width))) {
 				hallXPosition -= 13;
 				for (int i = 0; i < doorsInHallHitboxes.size(); i++)
 					doorsInHallHitboxes[i].x -= 13;
@@ -191,7 +199,7 @@ vector<Rectangle> Map::initializeDoorsHitboxes(int numberOfDoors)
 	vector<Rectangle> doors;
 	
 	for (int i = 0; i < numberOfDoors; i++)
-		doors.insert(doors.end(), { doorInRoomHitbox.x + 500*i, doorInRoomHitbox.y, doorInRoomHitbox.width, doorInRoomHitbox.height});
+		doors.insert(doors.end(), { (float)doorInRoomHitbox.x + (float)500*i, (float)doorInRoomHitbox.y, (float)doorInRoomHitbox.width, (float)doorInRoomHitbox.height});
 	return doors;
 }
 
@@ -208,13 +216,13 @@ vector<Texture2D> Map::initializeDoorsTextures(int numberOfDoors)
 // Initializes the hitboxes of all the desks
 vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 {
-	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10, (float)mapHitbox.upperBound.height + 90, (float)deskTexture.width, deskTexture.height - 5 };
+	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10.f, (float)mapHitbox.upperBound.height + 90.f, (float)deskTexture.width, deskTexture.height - 5.f };
 	vector<vector<Rectangle>> hitboxes;
 
 	for (int i = 0; i < rows; i++) {
 		hitboxes.push_back({});
 		for (int j = 0; j < columns; j++)
-			hitboxes[i].push_back({(float)firstDesk.x + deskTexture.width * j + j * 45 + 15.f, (float)firstDesk.y + 5, (float)deskTexture.width - 20.f, (float)deskTexture.height - 30});
+			hitboxes[i].push_back({(float)firstDesk.x + (float)deskTexture.width * j + (float)j * 45 + 15.f, (float)firstDesk.y + 5.f, (float)deskTexture.width - 20.f, (float)deskTexture.height - 30.f});
 		firstDesk.y += firstDesk.height + 40;
 	}
 	return hitboxes;
@@ -223,11 +231,11 @@ vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 // Initializes the bookshelves hitboxes automatically
 vector<Rectangle> Map::initializeBookshelvesHitboxes(int numberOfBookshelves) {
 
-	Rectangle firstHitbox = { doorInRoomHitbox.x + doorNotCollidingTexture.width + 250 - bookshelfTexture.width - 5, doorInRoomHitbox.y - 10, bookshelfTexture.width, bookshelfTexture.height - 35 };
+	Rectangle firstHitbox = { (float)doorInRoomHitbox.x + (float)doorNotCollidingTexture.width + 250.f - (float)bookshelfTexture.width - 5.f, (float)doorInRoomHitbox.y - 10.f, (float)bookshelfTexture.width, (float)bookshelfTexture.height - 35.f };
 	vector <Rectangle> hitboxes;
 
 	for (int i = 0; i < numberOfBookshelves; i++) {
-		hitboxes.push_back({ firstHitbox.x + 500 * i - 25, firstHitbox.y, firstHitbox.width*2 + 10, firstHitbox.height });
+		hitboxes.push_back({ (float)firstHitbox.x + (float)500 * i - 25.f, (float)firstHitbox.y, (float)firstHitbox.width*2 + 10.f, (float)firstHitbox.height });
 		
 	}
 
@@ -257,4 +265,9 @@ void Map::BookshelvesHitboxes(Rectangle& CharacterCurrentRec, Rectangle& Charact
 	
 	if (CharacterIsColliding)
 		CharacterNextRec = CharacterCurrentRec;
+}
+
+void Map::CheckIfLevelPassed(int currentLevel, int teacherHealth) {
+	if (teacherHealth <= 0)
+		isEachLevelPassed[currentLevel] = true;
 }

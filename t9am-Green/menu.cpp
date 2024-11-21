@@ -1,11 +1,13 @@
 #include "menu.h"
 
 Menu::Menu() {
-	playButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 - 25, 150, 50 };
-	exitButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 + 2 * playButton.height - 25, 150, 50 };
-	interactionMenu = { 100, 100, 700, 300 };
-	submitButton = { textBox.textbox.x + 25, textBox.textbox.y + 70, 175, 60 };
+	playButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 - 25, 150.f, 50.f };
+	exitButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 + 2 * playButton.height - 25, 150.f, 50.f };
+	interactionMenu = { 100.f, 100.f, 700.f, 300.f };
+	submitButton = { (float)textBox.textbox.x + 25, (float)textBox.textbox.y + 70, 175.f, 60.f };
 	interactionCloseButton = { interactionMenu.x + interactionMenu.width - 150, interactionMenu.y + interactionMenu.height - 60, 140, 50 };
+	gameWinWindow = { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()};
+	gameWinCloseButton = { (float)GetScreenWidth() / 2 - 100, (float)GetScreenHeight() / 2, 200.f, 50.f };
 }
 
 // Draws the start menu
@@ -52,8 +54,11 @@ bool Menu::CheckIfExitIsClicked()
 // Returns true if the player clicks on the close button while interacting with a teacher
 bool Menu::CheckIfInteractionClosed()
 {
-	if (CheckCollisionPointRec(GetMousePosition(), interactionCloseButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	if (CheckCollisionPointRec(GetMousePosition(), interactionCloseButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		textBox.ClearText();
+		textBox.textboxActive = false;
 		return 1;
+	}
 	else
 		return 0;
 }
@@ -64,12 +69,28 @@ bool Menu::IsCheckClicked() {
 		return true;
 	else
 		return false;
-}	
+}
+
+// Checks if the player clicks the close button in the window for winning the game.
+bool Menu::CheckIfWinCloseClicked() {
+	if (CheckCollisionPointRec(GetMousePosition(), gameWinCloseButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		return true;
+	else
+		return false;
+}
 
 // Shows a random math problem in the interaction menu
 void Menu::ShowRandomProblem(map<string, string> RandomProblem) {
 	auto it = RandomProblem.begin();
 
 	DrawText(it->first.c_str(), textBox.textbox.x + 20, textBox.textbox.y - 50, 30, WHITE);
+}
+
+void Menu::DrawWinWindow() {
+	DrawRectangleRec(gameWinWindow, GREEN);
+	DrawRectangleLinesEx(gameWinWindow, 10, DARKGREEN);
+	DrawText("YOU WON THE GAME!", GetScreenWidth() / 2.f - 165 , 180, 30, WHITE);
+	DrawRectangleRec(gameWinCloseButton, RED);
+	DrawText("Close", (float)gameWinCloseButton.x + 40, (float)gameWinCloseButton.y + 8, 40, WHITE);
 }
 
