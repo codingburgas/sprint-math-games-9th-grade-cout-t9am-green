@@ -22,4 +22,7 @@ private:
 	MathProblems AllMathProblems;
 	bool MenuClosed;
 	bool MenuToInteractOpened;
+	bool gameOverMenuOpened;
+	bool PauseMenuOpened;
+	bool ControlsMenuOpened;
 };

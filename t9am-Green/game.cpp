@@ -4,16 +4,28 @@ Game::Game() {
 	MenuClosed = false;
 	exitGame = false;
 	MenuToInteractOpened = false;
+	gameOverMenuOpened = false;
+	PauseMenuOpened = false;
+	ControlsMenuOpened = false;
 }
 
 // Checks for collisions, checks if the player clicks a button in the menu and updates the positions of the game objects
 void Game::Update() {
-	
+	if (PauseMenuOpened) {
+		PauseMenuOpened = !menu.CheckIfResumeClicked();
+		exitGame = menu.CheckIfExitPauseClicked();
+		if (menu.CheckIfControlsClicked()) {
+			ControlsMenuOpened = true;
+		}
+			if (menu.CheckIfExitControlsClicked())
+				ControlsMenuOpened = false;
+	}
+
 	if (!MenuClosed) {
 		MenuClosed = menu.CheckIfPlayIsClicked();
 		exitGame = menu.CheckIfExitIsClicked();
 	}
-	else {
+	else if (!PauseMenuOpened and !gameOverMenuOpened){
 			Rectangle CharacterRec = character.getTextureRect();
 			// The player's hitbox with his position after one step
 			Rectangle NextCharacterRec = character.getCharacterNextRect();
@@ -31,6 +43,10 @@ void Game::Update() {
 			if (MenuToInteractOpened) {
 				MenuToInteractOpened = !menu.CheckIfInteractionClosed();
 			}
+			if (character.health <= 0)
+				gameOverMenuOpened = true;
+			if (IsKeyPressed(KEY_P))
+				PauseMenuOpened = true;
 	}
 }
 
@@ -127,7 +143,7 @@ void Game::Draw() {
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher1; teacherHealth++)
 				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem1);
-			if (menu.IsCheckClicked()) {
+			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem1)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
 				menu.textBox.ClearText();
@@ -137,7 +153,7 @@ void Game::Draw() {
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher2; teacherHealth++)
 				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem2);
-			if (menu.IsCheckClicked()) {
+			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem2)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
 				menu.textBox.ClearText();
@@ -147,7 +163,7 @@ void Game::Draw() {
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher3; teacherHealth++)
 				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem3);
-			if (menu.IsCheckClicked()) {
+			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem3)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
 				menu.textBox.ClearText();
@@ -157,7 +173,7 @@ void Game::Draw() {
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher4; teacherHealth++)
 				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem4);
-			if (menu.IsCheckClicked()) {
+			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem4)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
 				menu.textBox.ClearText();
@@ -167,7 +183,7 @@ void Game::Draw() {
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher5; teacherHealth++)
 				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem5);
-			if (menu.IsCheckClicked()) {
+			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem5)));
 				AllMathProblems.ChangeCurrentProblem(map.currentRoomID - 1);
 				menu.textBox.ClearText();
@@ -176,7 +192,15 @@ void Game::Draw() {
 		}
 		if (map.isEachLevelPassed[5]) {
 			menu.DrawWinWindow();
-			exitGame = menu.CheckIfWinCloseClicked();
+			exitGame = menu.CheckIfCloseClicked();
 		}
 	}
+	if (gameOverMenuOpened) {
+		menu.DrawGameOverMenu();
+		exitGame = menu.CheckIfCloseClicked();
+	}
+	if (ControlsMenuOpened)
+		menu.DrawControls();
+	else if (PauseMenuOpened)
+		menu.DrawPauseMenu();
 }
