@@ -12,12 +12,13 @@ Teacher::Teacher()
 	healthTeacher3 = 3;
 	healthTeacher4 = 3;
 	healthTeacher5 = 3;
+	isColliding = false;
 }
 
 // Draws a teacher in the screen
 void Teacher::Draw()
 {
-	DrawTexture(texture, hitbox.x - 10, hitbox.y, WHITE);
+	DrawTexture(texture, (int)hitbox.x - 10, (int)hitbox.y, WHITE);
 }
 
 // Handles the teacher hitbox and its collisions with the player
@@ -30,7 +31,7 @@ void Teacher::Hitbox(Rectangle& CharacterCurrentRec, Rectangle& NextCharacterRec
 void Teacher::drawEButton()
 {
 	if(isColliding)
-	DrawTexture(eTexture, hitbox.x + hitbox.width - 10, hitbox.y - eTexture.height, WHITE);
+	DrawTexture(eTexture, (int)hitbox.x + (int)hitbox.width - 10, (int)hitbox.y - (int)eTexture.height, WHITE);
 }
 void Teacher::setCollidingState(bool collidingState)
 {

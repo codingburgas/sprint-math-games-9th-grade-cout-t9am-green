@@ -36,6 +36,7 @@ void Game::Update() {
 			mapHitbox.CheckForColliding(CharacterRec, NextCharacterRec);
 			map.DesksHitboxes(CharacterRec, NextCharacterRec);
 			map.BookshelvesHitboxes(CharacterRec, NextCharacterRec);
+			map.SofasHitboxes(CharacterRec, NextCharacterRec);
 			map.TeacherHitbox(CharacterRec, NextCharacterRec);
 			map.teacher.setCollidingState(map.teacher.CheckColission(NextCharacterRec));
 			if (map.currentRoomID != 1)
@@ -152,13 +153,13 @@ void Game::Draw() {
 		case 1:
 			if (!map.isEachLevelPassed[map.currentRoomID - 1] ) {
 				menu.DrawInteractionMenu();
-				DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
+				DrawText("Your health:", (int)menu.interactionMenu.x + 4, (int)menu.interactionMenu.y + 4, 25, WHITE);
 				for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-					DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth * character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
-				DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
+					DrawTexture(character.heartTexture, (int)menu.interactionMenu.x + 5 + (int)playerHealth * character.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
+				DrawText("Teacher's health:", (int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 100, (int)menu.interactionMenu.y + 4, 25, WHITE);
 
 				for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher1; teacherHealth++)
-					DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+					DrawTexture(map.teacher.heartTexture, ((int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 10) + (int)teacherHealth * map.teacher.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
 				menu.ShowRandomProblem(AllMathProblems.randomProblem1);
 				if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 					DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem1)));
@@ -172,13 +173,13 @@ void Game::Draw() {
 		case 2:
 			if (!map.isEachLevelPassed[map.currentRoomID - 1]) {
 				menu.DrawInteractionMenu();
-				DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
+				DrawText("Your health:", (int)menu.interactionMenu.x + 4, (int)menu.interactionMenu.y + 4, 25, WHITE);
 				for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-					DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth * character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
-				DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
+					DrawTexture(character.heartTexture, (int)menu.interactionMenu.x + 5 + (int)playerHealth * character.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
+				DrawText("Teacher's health:", (int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 100, (int)menu.interactionMenu.y + 4, 25, WHITE);
 
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher2; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 10) + (int)teacherHealth * map.teacher.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem2);
 			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem2)));
@@ -192,13 +193,13 @@ void Game::Draw() {
 		case 3:
 			if (!map.isEachLevelPassed[map.currentRoomID - 1]) {
 				menu.DrawInteractionMenu();
-				DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
+				DrawText("Your health:", (int)menu.interactionMenu.x + 4, (int)menu.interactionMenu.y + 4, 25, WHITE);
 				for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-					DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth * character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
-				DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
+					DrawTexture(character.heartTexture, (int)menu.interactionMenu.x + 5 + (int)playerHealth * character.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
+				DrawText("Teacher's health:", (int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 100, (int)menu.interactionMenu.y + 4, 25, WHITE);
 
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher3; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 10) + (int)teacherHealth * map.teacher.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem3);
 			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem3)));
@@ -212,13 +213,13 @@ void Game::Draw() {
 		case 4:
 			if (!map.isEachLevelPassed[map.currentRoomID - 1]) {
 				menu.DrawInteractionMenu();
-				DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
+				DrawText("Your health:", (int)menu.interactionMenu.x + 4, (int)menu.interactionMenu.y + 4, 25, WHITE);
 				for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-					DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth * character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
-				DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
+					DrawTexture(character.heartTexture, (int)menu.interactionMenu.x + 5 + (int)playerHealth * character.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
+				DrawText("Teacher's health:", (int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 100, (int)menu.interactionMenu.y + 4, 25, WHITE);
 
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher4; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 10) + (int)teacherHealth * map.teacher.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem4);
 			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem4)));
@@ -232,13 +233,13 @@ void Game::Draw() {
 		case 5:
 			if (!map.isEachLevelPassed[map.currentRoomID - 1]) {
 				menu.DrawInteractionMenu();
-				DrawText("Your health:", (float)menu.interactionMenu.x + 4.f, (float)menu.interactionMenu.y + 4.f, 25, WHITE);
+				DrawText("Your health:", (int)menu.interactionMenu.x + 4, (int)menu.interactionMenu.y + 4, 25, WHITE);
 				for (int playerHealth = 0; playerHealth < character.health; playerHealth++)
-					DrawTexture(character.heartTexture, (float)menu.interactionMenu.x + 5.f + (float)playerHealth * character.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
-				DrawText("Teacher's health:", (float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 100.f, (float)menu.interactionMenu.y + 4.f, 25.f, WHITE);
+					DrawTexture(character.heartTexture, (int)menu.interactionMenu.x + 5 + (int)playerHealth * character.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
+				DrawText("Teacher's health:", (int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 100, (int)menu.interactionMenu.y + 4, 25, WHITE);
 
 			for (int teacherHealth = 0; teacherHealth < map.teacher.healthTeacher5; teacherHealth++)
-				DrawTexture(map.teacher.heartTexture, ((float)menu.interactionMenu.x + (float)menu.interactionMenu.width - (float)3 * map.teacher.heartTexture.width - 10.f) + (float)teacherHealth * map.teacher.heartTexture.width, (float)menu.interactionMenu.y + 30.f, WHITE);
+				DrawTexture(map.teacher.heartTexture, ((int)menu.interactionMenu.x + (int)menu.interactionMenu.width - (int)3 * map.teacher.heartTexture.width - 10) + (int)teacherHealth * map.teacher.heartTexture.width, (int)menu.interactionMenu.y + 30, WHITE);
 			menu.ShowRandomProblem(AllMathProblems.randomProblem5);
 			if (menu.IsCheckClicked() or IsKeyPressed(KEY_ENTER)) {
 				DamagePlayerOrTeacher(IsProblemSolved(AllMathProblems.GetCurrentProblem(AllMathProblems.randomProblem5)));

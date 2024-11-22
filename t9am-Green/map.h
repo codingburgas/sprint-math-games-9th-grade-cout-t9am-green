@@ -18,10 +18,12 @@ public:
 	void TrackCharacter(Rectangle character);
 	void TeacherHitbox(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	vector <Rectangle> initializeDoorsHitboxes(int numberOfDoors);
+	vector<Rectangle> initializeBookshelvesHitboxes();
+	vector <Rectangle> initSofasHitboxes();
 	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
 	vector<vector <Rectangle>> initializeDesksHitboxes(int rows, int columns);
-	vector<Rectangle> initializeBookshelvesHitboxes(int numberOfBookshelves);
 	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
+	void SofasHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec);
 	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void CheckIfLevelPassed(int currentLevel, int teacherHealth);
 	void CheckCollidingTeacherDesk(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
@@ -32,6 +34,8 @@ public:
 	int hallXPosition;
 	int hallPositionOffset;
 	// The texture of the current room. It will change along with the currentRoomID variable
+	MapHitbox mapHitbox;
+	Teacher teacher;
     Texture2D CurrentRoomTexture;
 	Texture2D doorNotCollidingTexture;
 	Texture2D doorCollidingTexture;
@@ -43,16 +47,17 @@ public:
 	Texture2D teacherDesk;
 	Texture2D eButton1;
 	Texture2D eButton2;
+	Texture2D sofaTexture;
+	vector<Texture2D> paintingsTextures;
 	// The hitbox of the classroom door
 	Rectangle doorInRoomHitbox;
 	Rectangle teacherDeskHitbox;
 	vector<vector<Rectangle>> deskHitboxes;
 	vector<Rectangle> doorsInHallHitboxes;
-	vector<Texture2D> doorsInHallTextures;
 	vector<Rectangle> bookShelvesHitboxes;
+	vector<Rectangle> sofasHitboxes;
+	vector<Texture2D> doorsInHallTextures;
 	vector <bool> isEachLevelPassed;
-	MapHitbox mapHitbox;
-	Teacher teacher;
 private:
 	vector <Texture2D> rooms = {
 	 LoadTexture("Graphics/hall.png"),

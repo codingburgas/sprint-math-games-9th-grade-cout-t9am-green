@@ -22,7 +22,6 @@ int main() {
 		// Exits the game loop and closes the game window if the exit button in the menu is clicked
 		if (game.exitGame)
 			break;
-
 		EndDrawing();
 
 	}
