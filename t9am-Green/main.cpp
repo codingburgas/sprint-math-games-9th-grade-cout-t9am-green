@@ -3,7 +3,7 @@
 
 int main() {
 	// Initializes the window
-	InitWindow(900, 500, "test");
+	InitWindow(900, 500, "Count the Teacher");
 
 	Game game;
 	// Sets amount of frames per second

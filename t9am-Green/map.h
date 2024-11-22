@@ -24,6 +24,7 @@ public:
 	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void CheckIfLevelPassed(int currentLevel, int teacherHealth);
+	void CheckCollidingTeacherDesk(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 
 	//Each room has an ID - ID 1 for the hall, ID 2 for the first classroom, ID 3 for the second classroom and so on
 	int currentRoomID;
@@ -37,10 +38,14 @@ public:
 	Texture2D doorCurrentTexture;
 	Texture2D deskTexture;
 	Texture2D bookshelfTexture;
-	Texture2D lockedPadlock = LoadTexture("Graphics/lockTextureClosed.png");
-	Texture2D unlockedPadlock = LoadTexture("Graphics/lockTextureOpened.png");
+	Texture2D lockedPadlock;
+	Texture2D unlockedPadlock;
+	Texture2D teacherDesk;
+	Texture2D eButton1;
+	Texture2D eButton2;
 	// The hitbox of the classroom door
 	Rectangle doorInRoomHitbox;
+	Rectangle teacherDeskHitbox;
 	vector<vector<Rectangle>> deskHitboxes;
 	vector<Rectangle> doorsInHallHitboxes;
 	vector<Texture2D> doorsInHallTextures;
@@ -53,4 +58,6 @@ private:
 	 LoadTexture("Graphics/hall.png"),
 	 LoadTexture("Graphics/room.png")
 	};
+	vector<bool> DoorsInHallColliding;
+	bool IsDoorInRoomColliding;
 };

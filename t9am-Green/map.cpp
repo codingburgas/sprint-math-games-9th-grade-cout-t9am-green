@@ -10,10 +10,15 @@ Map::Map() {
 	deskTexture = LoadTexture("Graphics/desk.png");
 	doorCurrentTexture = doorNotCollidingTexture;
 	bookshelfTexture = LoadTexture("Graphics/BookShelf.png");
+	lockedPadlock = LoadTexture("Graphics/lockTextureClosed.png");
+	unlockedPadlock = LoadTexture("Graphics/lockTextureOpened.png");
+	teacherDesk = LoadTexture("Graphics/TeacherDesk.png");
+	eButton1 = LoadTexture("Graphics/E-button1.png");
 	doorInRoomHitbox = { 170.f, 70.f, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
 	doorsInHallHitboxes = initializeDoorsHitboxes(5);
 	doorsInHallTextures = initializeDoorsTextures(5);
 	bookShelvesHitboxes = initializeBookshelvesHitboxes(4);
+	teacherDeskHitbox = { (float)GetScreenWidth() - mapHitbox.rightBound.width - teacherDesk.width - 5, (float)GetScreenHeight() / 2 - teacherDesk.height - 15, (float)teacherDesk.width, (float)teacherDesk.height - 50 };
 	isEachLevelPassed = {
 		true,
 		false,
@@ -22,6 +27,14 @@ Map::Map() {
 		false,
 		false
 	};
+	DoorsInHallColliding = {
+		false,
+		false,
+		false,
+		false,
+		false
+	};
+	IsDoorInRoomColliding = false;
 }
 
 //Draws different rooms according to the currentRoomID variable
@@ -30,12 +43,18 @@ void Map::Draw() {
 	case 1:
 		DrawTexture(CurrentRoomTexture, hallXPosition, 0, WHITE);
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
+			if (DoorsInHallColliding[i]) {
+				DrawTexture(eButton1, doorsInHallHitboxes[i].x + doorCollidingTexture.width + 5, doorsInHallHitboxes[i].y, WHITE);
+			}
+		}
+		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
 			DrawTexture(doorsInHallTextures[i], (int)doorsInHallHitboxes[i].x, (int)doorsInHallHitboxes[i].y, WHITE);
 			if (isEachLevelPassed[i])
 				DrawTexture(unlockedPadlock, (int)doorsInHallHitboxes[i].x - (int)unlockedPadlock.width - 5, (int)doorsInHallHitboxes[i].y, WHITE);
 			else
 				DrawTexture(lockedPadlock, (int)doorsInHallHitboxes[i].x - (int)unlockedPadlock.width - 5, (int)doorsInHallHitboxes[i].y, WHITE);
 		}
+
 		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
 			DrawTexture(bookshelfTexture, (int)bookShelvesHitboxes[i].x, (int)bookShelvesHitboxes[i].y, WHITE);
 			DrawTexture(bookshelfTexture, (int)bookShelvesHitboxes[i].x + (int)bookshelfTexture.width + 10, (int)bookShelvesHitboxes[i].y, WHITE);
@@ -44,6 +63,8 @@ void Map::Draw() {
 		break;
 	default:
 		DrawTexture(CurrentRoomTexture, 0, 0, WHITE);
+		if (IsDoorInRoomColliding)
+			DrawTexture(eButton1, doorInRoomHitbox.x + doorCollidingTexture.width + 5, doorInRoomHitbox.y, WHITE);
 		DrawTexture(doorCurrentTexture, (int)doorInRoomHitbox.x, (int)doorInRoomHitbox.y, WHITE);
 
 		deskHitboxes = initializeDesksHitboxes(2, 5);
@@ -52,6 +73,8 @@ void Map::Draw() {
 				DrawTexture(deskTexture, (int)deskHitboxes[i][j].x - 15, (int)deskHitboxes[i][j].y, WHITE);
 		}
 		teacher.Draw();
+		DrawTexture(teacherDesk, teacherDeskHitbox.x, teacherDeskHitbox.y, WHITE);
+		teacher.drawEButton();
 	}
 }
 
@@ -60,22 +83,30 @@ void Map::UpdateDoor(Rectangle CollidingObject)
 {
 	if (currentRoomID == 1) {
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
-			if (CheckCollisionRecs(CollidingObject, doorsInHallHitboxes[i]) and isEachLevelPassed[i])
-					doorsInHallTextures[i] = doorCollidingTexture;
-			else
+			if (CheckCollisionRecs(CollidingObject, doorsInHallHitboxes[i]) and isEachLevelPassed[i]) {
+				doorsInHallTextures[i] = doorCollidingTexture;
+				DrawTexture(eButton1, doorsInHallHitboxes[i].x + doorCollidingTexture.width + 5, doorsInHallHitboxes[i].y, WHITE);
+				DoorsInHallColliding[i] = true;
+			}
+			else {
 				doorsInHallTextures[i] = doorNotCollidingTexture;
+				DoorsInHallColliding[i] = false;
+			}
 		}
 	}
 	else if (currentRoomID > 1 and currentRoomID <= 6) {
-		if (CheckCollisionRecs(CollidingObject, doorInRoomHitbox))
+		if (CheckCollisionRecs(CollidingObject, doorInRoomHitbox)) {
 			doorCurrentTexture = doorCollidingTexture;
-		else
+			IsDoorInRoomColliding = true;
+		}
+		else {
 			doorCurrentTexture = doorNotCollidingTexture;
+			IsDoorInRoomColliding = false;
+		}
 	}
 }
 
-//Checks with which door the character is colliding and returns the number of that door. If there are no collisions it
-//returns 0
+//Checks with which door the character is colliding and returns the number of that door. If there are no collisions it returns 0
 int Map::CheckWhichDoorIsColliding(Rectangle collidingObject)
 {
 	if (currentRoomID != 1) {
@@ -270,4 +301,9 @@ void Map::BookshelvesHitboxes(Rectangle& CharacterCurrentRec, Rectangle& Charact
 void Map::CheckIfLevelPassed(int currentLevel, int teacherHealth) {
 	if (teacherHealth <= 0)
 		isEachLevelPassed[currentLevel] = true;
+}
+
+void Map::CheckCollidingTeacherDesk(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec){
+	if (CheckCollisionRecs(teacherDeskHitbox, CharacterNextRec))
+		CharacterNextRec = CharacterCurrentRec;
 }

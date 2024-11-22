@@ -25,9 +25,6 @@ void TextBox::Update() {
 	}
 	else
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) and !CheckCollisionPointRec(GetMousePosition(), textbox))
-		textboxActive = false;
-
 	if (textboxActive) {
 		UpdateTheText();
 		for (int i = 0; i < letterCounter; i++);

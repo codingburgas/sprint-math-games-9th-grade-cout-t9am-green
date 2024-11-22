@@ -13,9 +13,9 @@ public:
 	bool exitGame;
 	void Draw();
 	void Update();
-private:
 	int IsProblemSolved(string currentProblem);
 	void DamagePlayerOrTeacher(int problemCorrect);
+private:
 	Character character;
 	MapHitbox mapHitbox;
 	Menu menu;
@@ -23,6 +23,7 @@ private:
 	bool MenuClosed;
 	bool MenuToInteractOpened;
 	bool gameOverMenuOpened;
+	bool gameWinMenuOpened;
 	bool PauseMenuOpened;
 	bool ControlsMenuOpened;
 };

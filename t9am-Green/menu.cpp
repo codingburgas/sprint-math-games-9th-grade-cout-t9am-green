@@ -20,7 +20,7 @@ Menu::Menu() {
 // Draws the start menu
 void Menu::Draw() {
 	DrawText("Count the Teacher", (float)GetScreenWidth() / 2 - 150, 40.f, 30, WHITE);
-	ClearBackground(BLACK);
+	ClearBackground(DARKGREEN);
 	DrawRectangleRec(playButton, GREEN);
 	DrawTextEx(GetFontDefault(), "Play", { playButton.x + MeasureTextEx(GetFontDefault(), "Play", 20, 5).x / 2, playButton.y }, 45, 5, WHITE);
 	DrawRectangleRec(exitButton, RED);
@@ -116,7 +116,7 @@ bool Menu::CheckIfExitControlsClicked() {
 
 // Shows a random math problem in the interaction menu
 void Menu::ShowRandomProblem(map<string, string> RandomProblem) {
-	auto it = RandomProblem.begin();
+	map<string, string>::iterator it = RandomProblem.begin();
 
 	DrawText(it->first.c_str(), textBox.textbox.x + 20, textBox.textbox.y - 50, 30, WHITE);
 }
@@ -136,7 +136,7 @@ void Menu::DrawGameOverMenu() {
 	DrawRectangleRec(gameCloseButton, RED);
 	DrawText("Close", (float)gameCloseButton.x + 40, (float)gameCloseButton.y + 8, 40, WHITE);
 }
-
+//Draws paused menu
 void Menu::DrawPauseMenu() {
 	DrawRectangleRec(pauseMenu, GRAY);
 	DrawRectangleLinesEx(pauseMenu, 4, BLACK);
@@ -158,7 +158,8 @@ void Menu::DrawControls() {
 	DrawText("Controls", controlsMenu.width / 2, controlsMenu.y + 10, 40, WHITE);
 	DrawText("WASD - Move", controlsMenu.x + 10, controlsMenu.y + 70, 40, BLACK);
 	DrawText("E - Interact", controlsMenu.x + 10, controlsMenu.y + 110, 40, BLACK);
-	DrawText("P - Pause", controlsMenu.x + 10, controlsMenu.y + 150, 40, BLACK);
+	DrawText("Q - Pause", controlsMenu.x + 10, controlsMenu.y + 150, 40, BLACK);
+	DrawText("Enter - Check Question", controlsMenu.x + 10, controlsMenu.y + 190, 40, BLACK);
 	DrawRectangleRec(exitControlsMenuButton, RED);
 	DrawText("Back", exitControlsMenuButton.x + 10, exitControlsMenuButton.y + 8, 40, BLACK);
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-constexpr auto MAX_INPUT_CHARS = 5;
+constexpr int MAX_INPUT_CHARS = 5;
 
 // Class that has all the needed values for the textbox
 class TextBox {

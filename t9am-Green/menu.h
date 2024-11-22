@@ -10,20 +10,7 @@ using namespace std;
 class Menu {
 public:
 	Menu();
-	Rectangle playButton;
-	Rectangle exitButton;
 	Rectangle interactionMenu;
-	Rectangle submitButton;
-	Rectangle interactionCloseButton;
-	Rectangle gameWinWindow;
-	Rectangle gameCloseButton;
-	Rectangle gameOverMenu;
-	Rectangle pauseMenu;
-	Rectangle resumeButton;
-	Rectangle controlsButton;
-	Rectangle exitGamePauseButton;
-	Rectangle controlsMenu;
-	Rectangle exitControlsMenuButton;
 	TextBox textBox;
 	void Draw();
 	void DrawInteractionMenu();
@@ -41,4 +28,18 @@ public:
 	bool CheckIfControlsClicked();
 	bool CheckIfExitPauseClicked();
 	bool CheckIfExitControlsClicked();
+private:
+	Rectangle playButton;
+	Rectangle exitButton;
+	Rectangle submitButton;
+	Rectangle interactionCloseButton;
+	Rectangle gameWinWindow;
+	Rectangle gameCloseButton;
+	Rectangle gameOverMenu;
+	Rectangle pauseMenu;
+	Rectangle resumeButton;
+	Rectangle controlsButton;
+	Rectangle exitGamePauseButton;
+	Rectangle controlsMenu;
+	Rectangle exitControlsMenuButton;
 };

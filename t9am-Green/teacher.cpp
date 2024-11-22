@@ -3,8 +3,9 @@
 Teacher::Teacher()
 {
 	texture = LoadTexture("Graphics/TeacherTexture.png");
+	eTexture = LoadTexture("Graphics/E-button1.png");
 	heartTexture = LoadTexture("Graphics/heart.png");
-	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2 + 100, (float)GetScreenHeight() / 2, (float)texture.width, (float)texture.height };
+	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2 + 100 + 10, (float)GetScreenHeight() / 2, (float)texture.width , (float)texture.height - 20};
 	interactingHitbox = { hitbox.x - 30, hitbox.y - 30, hitbox.width + 60, hitbox.height + 60 };
 	healthTeacher1 = 3;
 	healthTeacher2 = 3;
@@ -16,7 +17,7 @@ Teacher::Teacher()
 // Draws a teacher in the screen
 void Teacher::Draw()
 {
-	DrawTexture(texture, hitbox.x, hitbox.y, WHITE);
+	DrawTexture(texture, hitbox.x - 10, hitbox.y, WHITE);
 }
 
 // Handles the teacher hitbox and its collisions with the player
@@ -26,13 +27,31 @@ void Teacher::Hitbox(Rectangle& CharacterCurrentRec, Rectangle& NextCharacterRec
 		
 	}
 }
+void Teacher::drawEButton()
+{
+	if(isColliding)
+	DrawTexture(eTexture, hitbox.x + hitbox.width - 10, hitbox.y - eTexture.height, WHITE);
+}
+void Teacher::setCollidingState(bool collidingState)
+{
+	isColliding = collidingState;
+}
 // Checks if the player is trying to interact with a teacher
 bool Teacher::CheckIfInteracting(Rectangle CharacterRec, bool& menuOpened)
 {
-	if (CheckCollisionRecs(CharacterRec, interactingHitbox) and IsKeyPressed(KEY_E)) {
+	if (CheckColission(CharacterRec) and IsKeyPressed(KEY_E)) {
 		menuOpened = true;
 		return true;
 	}
+	else
+		return false;
+}
+
+bool Teacher::CheckColission(Rectangle CharacterRec)
+{
+	if (CheckCollisionRecs(CharacterRec, interactingHitbox))
+	return true;
+	
 	else
 		return false;
 }
