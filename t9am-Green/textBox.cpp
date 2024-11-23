@@ -34,10 +34,9 @@ void TextBox::Update() {
 // Updates the text string
 void TextBox::UpdateTheText() {
 	int key = GetKeyPressed();
-
 	while (key > 0) {
 
-		if (key >= 32 and key <= 125 and letterCounter < MAX_INPUT_CHARS) {
+		if (key >= 48 and key <= 57 and letterCounter < MAX_INPUT_CHARS) {
 			text[letterCounter] = (char)key;
 			text[letterCounter + 1] = '\0';
 			letterCounter++;

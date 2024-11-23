@@ -38,7 +38,7 @@ void Game::Update() {
 			map.BookshelvesHitboxes(CharacterRec, NextCharacterRec);
 			map.SofasHitboxes(CharacterRec, NextCharacterRec);
 			map.TeacherHitbox(CharacterRec, NextCharacterRec);
-			map.teacher.setCollidingState(map.teacher.CheckColission(NextCharacterRec));
+			map.teacher.setCollidingState(map.teacher.CheckCollision(NextCharacterRec));
 			if (map.currentRoomID != 1)
 				map.CheckCollidingTeacherDesk(CharacterRec, NextCharacterRec);
 			if (!MenuToInteractOpened)
@@ -103,32 +103,42 @@ void Game::DamagePlayerOrTeacher(int problemCorrect) {
 		{
 		case 1:
 			map.teacher.healthTeacher1--;
-			if(map.teacher.healthTeacher1 == 0)
+			if (map.teacher.healthTeacher1 == 0) {
 				menu.textBox.textboxActive = false;
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher1);
 			break;
 		case 2:
 			map.teacher.healthTeacher2--;
-			if (map.teacher.healthTeacher2 == 0)
+			if (map.teacher.healthTeacher2 == 0) {
 				menu.textBox.textboxActive = false;
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher2);
 			break;
 		case 3:
 			map.teacher.healthTeacher3--;
-			if (map.teacher.healthTeacher3 == 0)
+			if (map.teacher.healthTeacher3 == 0) {
 				menu.textBox.textboxActive = false;
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher3);
 			break;
 		case 4:
 			map.teacher.healthTeacher4--;
-			if (map.teacher.healthTeacher4 == 0)
+			if (map.teacher.healthTeacher4 == 0) {
 				menu.textBox.textboxActive = false;
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher4);
 			break;
 		case 5:
 			map.teacher.healthTeacher5--;
-			if (map.teacher.healthTeacher5 == 0)
+			if (map.teacher.healthTeacher5 == 0) {
 				menu.textBox.textboxActive = false;
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 			map.CheckIfLevelPassed(map.currentRoomID - 1, map.teacher.healthTeacher5);
 			break;
 		}

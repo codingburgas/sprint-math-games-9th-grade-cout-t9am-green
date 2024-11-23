@@ -40,7 +40,7 @@ void Teacher::setCollidingState(bool collidingState)
 // Checks if the player is trying to interact with a teacher
 bool Teacher::CheckIfInteracting(Rectangle CharacterRec, bool& menuOpened)
 {
-	if (CheckColission(CharacterRec) and IsKeyPressed(KEY_E)) {
+	if (CheckCollision(CharacterRec) and IsKeyPressed(KEY_E)) {
 		menuOpened = true;
 		return true;
 	}
@@ -48,7 +48,7 @@ bool Teacher::CheckIfInteracting(Rectangle CharacterRec, bool& menuOpened)
 		return false;
 }
 
-bool Teacher::CheckColission(Rectangle CharacterRec)
+bool Teacher::CheckCollision(Rectangle CharacterRec)
 {
 	if (CheckCollisionRecs(CharacterRec, interactingHitbox))
 	return true;

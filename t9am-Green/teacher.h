@@ -11,7 +11,7 @@ public:
 	void drawEButton();
 	void setCollidingState(bool collidingState);
 	bool CheckIfInteracting(Rectangle CharacterRec, bool &menuOpened);
-	bool CheckColission(Rectangle CharacterRec);
+	bool CheckCollision(Rectangle CharacterRec);
 	Texture2D texture;
 	Texture2D heartTexture;
 	Texture2D eTexture;

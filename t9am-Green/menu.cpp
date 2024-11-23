@@ -118,7 +118,7 @@ bool Menu::CheckIfExitControlsClicked() {
 void Menu::ShowRandomProblem(map<string, string> RandomProblem) {
 	map<string, string>::iterator it = RandomProblem.begin();
 
-	DrawText(it->first.c_str(), textBox.textbox.x + 20, textBox.textbox.y - 50, 30, WHITE);
+	DrawText(it->first.c_str(), textBox.textbox.x - 20, textBox.textbox.y - 50, 30, WHITE);
 }
 
 void Menu::DrawWinWindow() {

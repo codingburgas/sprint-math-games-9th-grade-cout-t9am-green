@@ -2,6 +2,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <random>
 using namespace std;
 
 // Class that has all the math problems of the game and the needed functions to interact with them

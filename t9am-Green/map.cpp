@@ -26,11 +26,11 @@ Map::Map() {
 	doorsInHallTextures = initializeDoorsTextures(5);
 	bookShelvesHitboxes = initializeBookshelvesHitboxes();
 	sofasHitboxes = initSofasHitboxes();
-	teacherDeskHitbox = { (float)GetScreenWidth() - mapHitbox.rightBound.width - teacherDesk.width - 5, (float)GetScreenHeight() / 2 - teacherDesk.height - 15, (float)teacherDesk.width, (float)teacherDesk.height - 50 };
+	teacherDeskHitbox = { (float)GetScreenWidth() - mapHitbox.rightBound.width - teacherDesk.width - 5, (float)GetScreenHeight() / 2 - teacherDesk.height - 15, (float)teacherDesk.width, (float)teacherDesk.height - 40 };
 	isEachLevelPassed = {
 		true,
-		true,
-		true,
+		false,
+		false,
 		false,
 		false,
 		false
@@ -56,6 +56,7 @@ void Map::Draw() {
 			}
 		}
 		for (int i = 0; i < doorsInHallHitboxes.size(); i++) {
+			DrawText("Level ", doorsInHallHitboxes[i].x - 10, doorsInHallHitboxes[i].y + 10, 10, { 192, 209, 121, 255 });
 			DrawTexture(doorsInHallTextures[i], (int)doorsInHallHitboxes[i].x, (int)doorsInHallHitboxes[i].y, WHITE);
 			if (isEachLevelPassed[i])
 				DrawTexture(unlockedPadlock, (int)doorsInHallHitboxes[i].x - (int)unlockedPadlock.width - 5, (int)doorsInHallHitboxes[i].y, WHITE);
@@ -271,7 +272,7 @@ vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 	for (int i = 0; i < rows; i++) {
 		hitboxes.push_back({});
 		for (int j = 0; j < columns; j++)
-			hitboxes[i].push_back({(float)firstDesk.x + (float)deskTexture.width * j + (float)j * 45 + 15.f, (float)firstDesk.y + 5.f, (float)deskTexture.width - 20.f, (float)deskTexture.height - 30.f});
+			hitboxes[i].push_back({(float)firstDesk.x + (float)deskTexture.width * j + (float)j * 45 + 15.f, (float)firstDesk.y + 5.f, (float)deskTexture.width - 20.f, (float)deskTexture.height - 40.f});
 		firstDesk.y += firstDesk.height + 40;
 	}
 	return hitboxes;
