@@ -9,16 +9,16 @@ public:
 	Character();
 	void Draw();
 	void Update(float NewX, float NewY);
-	Rectangle getTextureRect();
+	Rectangle GetTextureRect();
 	// Returns the hitbox of the character after one step
-	Rectangle getCharacterNextRect();
-	void drawHealth();
+	Rectangle GetCharacterNextRect();
+	void DrawHealth();
 	Vector2 position;
 	Texture2D heartTexture;
 	int health;
 private:
 	int speed;
-	Texture2D movingRight;      
+	Texture2D movingRight;
 	Texture2D movingLeft;
 	Texture2D movingUp;
 	Texture2D movingDown;

@@ -9,10 +9,10 @@ public:
 	void Draw();
 	void Update();
 	void ClearText();
+	void UpdateTheText();
 	char text[MAX_INPUT_CHARS + 1] = "\0";
 	int letterCounter;
 	Rectangle textbox;
 	bool textboxActive;
 private:
-	void UpdateTheText();
 };

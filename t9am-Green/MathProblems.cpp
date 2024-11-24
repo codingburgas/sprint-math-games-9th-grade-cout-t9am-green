@@ -16,8 +16,7 @@ MathProblems::MathProblems() {
 	Level1["67 + 45 = ?"] = "112";
 	Level1["308 + 492 = ?"] = "800";
 	Level1["150 + 275 = ?"] = "425";
-
-
+	
 	Level2["216 - 157 = ?"] = "59";
 	Level2["231 - 43 = ?"] = "188";
 	Level2["513 - 379 = ?"] = "134";
@@ -32,8 +31,7 @@ MathProblems::MathProblems() {
 	Level2["243 - 76 = ?"] = "167";
 	Level2["900 - 456 = ?"] = "444";
 	Level2["500 - 375 = ?"] = "125";
-
-
+	
 	Level3["24 * 7 = ?"] = "168";
 	Level3["34 * 5 = ?"] = "170";
 	Level3["87 * 3 = ?"] = "261";
@@ -52,8 +50,7 @@ MathProblems::MathProblems() {
 	Level3["11 * 9 = ?"] = "99";
 	Level3["16 * 12 = ?"] = "192";
 	Level3["8 * 27 = ?"] = "216";
-
-
+	
 	Level4["27 / 9 = ?"] = "3";
 	Level4["155 / 5 = ?"] = "31";
 	Level4["178 / 2 = ?"] = "89";
@@ -72,8 +69,7 @@ MathProblems::MathProblems() {
 	Level4["6,048 / 42 = ?"] = "144";
 	Level4["8,100 / 90 = ?"] = "90";
 	Level4["12,672 / 96 = ?"] = "132";
-
-
+	
 	Level5["sqrt(225) = ?"] = "15";
 	Level5["147 + 325 = ?"] = "472";
 	Level5["769 - 547 = ?"] = "222";
@@ -91,8 +87,7 @@ MathProblems::MathProblems() {
 	Level5["(4,000 - 1,500) * 3 = ?"] = "7500";
 	Level5["(600 / 8) * 10 = ?"] = "750";
 	Level5["(800 + 1,000) / 25 = ?"] = "72";
-
-
+	
 	randomProblem1 = GetRandomProblem(Level1);
 	randomProblem2 = GetRandomProblem(Level2);
 	randomProblem3 = GetRandomProblem(Level3);

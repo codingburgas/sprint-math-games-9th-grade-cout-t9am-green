@@ -4,6 +4,7 @@ TextBox::TextBox() {
 	letterCounter = 0;
 	textbox = { GetScreenWidth() / 2.f - 100, 180, 225, 50 };
 	textboxActive = false;
+	
 }
 
 // Draws the textbox on the screen

@@ -17,11 +17,11 @@ public:
 	void CheckIfDoorIsUsed(Rectangle &character);
 	void TrackCharacter(Rectangle character);
 	void TeacherHitbox(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
-	vector <Rectangle> initializeDoorsHitboxes(int numberOfDoors);
-	vector<Rectangle> initializeBookshelvesHitboxes();
-	vector <Rectangle> initSofasHitboxes();
-	vector <Texture2D> initializeDoorsTextures(int numberOfDoors);
-	vector<vector <Rectangle>> initializeDesksHitboxes(int rows, int columns);
+	vector <Rectangle> InitializeDoorsHitboxes(int numberOfDoors);
+	vector<Rectangle> InitializeBookshelvesHitboxes();
+	vector <Rectangle> InitSofasHitboxes();
+	vector <Texture2D> InitializeDoorsTextures(int numberOfDoors);
+	vector<vector <Rectangle>> InitializeDesksHitboxes(int rows, int columns);
 	void DesksHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);
 	void SofasHitboxes(Rectangle& CharacterCurrentRec, Rectangle& CharacterNextRec);
 	void BookshelvesHitboxes(Rectangle &CharacterCurrentRec, Rectangle &CharacterNextRec);

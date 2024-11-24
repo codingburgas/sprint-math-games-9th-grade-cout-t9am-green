@@ -74,13 +74,13 @@ void Character::Update(float NewX, float NewY) {
 }
 
 // Returns the current position of the character hitbox
-Rectangle Character::getTextureRect() {
+Rectangle Character::GetTextureRect() {
 	return Rectangle{ position.x, position.y, source.width, source.height };
 }
 
 // Returns the position of the character hitbox after he makes one step
-Rectangle Character::getCharacterNextRect() {
-	Rectangle CharacterCurrentRect = getTextureRect();
+Rectangle Character::GetCharacterNextRect() {
+	Rectangle CharacterCurrentRect = GetTextureRect();
 
 	if (IsKeyDown(KEY_A))
 		CharacterCurrentRect.x -= speed;
@@ -95,7 +95,7 @@ Rectangle Character::getCharacterNextRect() {
 }
 
 // Draws the character health on the screen
-void Character::drawHealth()
+void Character::DrawHealth()
 {
 	for (int i = 0; i < health; i++)
 	{

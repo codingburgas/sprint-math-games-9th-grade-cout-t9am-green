@@ -2,10 +2,15 @@
 
 Teacher::Teacher()
 {
-	texture = LoadTexture("Graphics/TeacherTexture.png");
+	teachersTextures = {
+		LoadTexture("Graphics/teacher1.png"),
+		LoadTexture("Graphics/teacher2.png"),
+		LoadTexture("Graphics/teacher3.png"),
+		LoadTexture("Graphics/teacher4.png")
+	};
 	eTexture = LoadTexture("Graphics/E-button1.png");
 	heartTexture = LoadTexture("Graphics/heart.png");
-	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2 + 100 + 10, (float)GetScreenHeight() / 2, (float)texture.width , (float)texture.height - 20};
+	hitbox = { (float)GetScreenWidth() / 2 + (GetScreenWidth() / 2) / 2 + 100 + 10, (float)GetScreenHeight() / 2, (float)teachersTextures[0].width , (float)teachersTextures[0].height - 20};
 	interactingHitbox = { hitbox.x - 30, hitbox.y - 30, hitbox.width + 60, hitbox.height + 60 };
 	healthTeacher1 = 3;
 	healthTeacher2 = 3;
@@ -16,9 +21,26 @@ Teacher::Teacher()
 }
 
 // Draws a teacher in the screen
-void Teacher::Draw()
+void Teacher::Draw(int currentLevel)
 {
-	DrawTexture(texture, (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+	switch (currentLevel)
+	{
+	case 1:
+		DrawTexture(teachersTextures[0], (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+		break;
+	case 2:
+		DrawTexture(teachersTextures[1], (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+		break;
+	case 3:
+		DrawTexture(teachersTextures[2], (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+		break;
+	case 4:
+		DrawTexture(teachersTextures[3], (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+		break;
+	case 5:
+		DrawTexture(teachersTextures[0], (int)hitbox.x - 10, (int)hitbox.y, WHITE);
+		break;
+	}
 }
 
 // Handles the teacher hitbox and its collisions with the player
@@ -28,12 +50,12 @@ void Teacher::Hitbox(Rectangle& CharacterCurrentRec, Rectangle& NextCharacterRec
 		
 	}
 }
-void Teacher::drawEButton()
+void Teacher::DrawEButton()
 {
 	if(isColliding)
 	DrawTexture(eTexture, (int)hitbox.x + (int)hitbox.width - 10, (int)hitbox.y - (int)eTexture.height, WHITE);
 }
-void Teacher::setCollidingState(bool collidingState)
+void Teacher::SetCollidingState(bool collidingState)
 {
 	isColliding = collidingState;
 }

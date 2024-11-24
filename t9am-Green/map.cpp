@@ -23,10 +23,10 @@ Map::Map() {
 		LoadTexture("Graphics/painting4.png")
 	};
 	doorInRoomHitbox = { 170.f, 70.f, (float)doorNotCollidingTexture.width, (float)doorNotCollidingTexture.height };
-	doorsInHallHitboxes = initializeDoorsHitboxes(5);
-	doorsInHallTextures = initializeDoorsTextures(5);
-	bookShelvesHitboxes = initializeBookshelvesHitboxes();
-	sofasHitboxes = initSofasHitboxes();
+	doorsInHallHitboxes = InitializeDoorsHitboxes(5);
+	doorsInHallTextures = InitializeDoorsTextures(5);
+	bookShelvesHitboxes = InitializeBookshelvesHitboxes();
+	sofasHitboxes = InitSofasHitboxes();
 	teacherDeskHitbox = { (float)GetScreenWidth() - mapHitbox.rightBound.width - teacherDesk.width - 5, (float)GetScreenHeight() / 2 - teacherDesk.height - 15, (float)teacherDesk.width, (float)teacherDesk.height - 40 };
 	isEachLevelPassed = {
 		true,
@@ -68,7 +68,7 @@ void Map::Draw() {
 		for (int i = 0; i < bookShelvesHitboxes.size(); i++) {
 			DrawTexture(bookshelfTexture, (int)bookShelvesHitboxes[i].x, (int)bookShelvesHitboxes[i].y, WHITE);
 		}
-		deskHitboxes = initializeDesksHitboxes(0, 0);
+		deskHitboxes = InitializeDesksHitboxes(0, 0);
 		DrawTexture(paintingsTextures[0], (int)doorsInHallHitboxes[0].x + (int)doorsInHallHitboxes[0].width + 70, (int)doorsInHallHitboxes[0].y - 10, WHITE);
 		DrawTexture(paintingsTextures[1], (int)doorsInHallHitboxes[1].x + (int)doorsInHallHitboxes[1].width + 70, (int)doorsInHallHitboxes[1].y - 10, WHITE);
 		DrawTexture(paintingsTextures[2], (int)doorsInHallHitboxes[2].x + (int)doorsInHallHitboxes[2].width + 175, (int)doorsInHallHitboxes[2].y - 10, WHITE);
@@ -83,15 +83,15 @@ void Map::Draw() {
 			DrawTexture(eButton1, (int)doorInRoomHitbox.x + (int)doorCollidingTexture.width + 5, (int)doorInRoomHitbox.y, WHITE);
 		DrawTexture(doorCurrentTexture, (int)doorInRoomHitbox.x, (int)doorInRoomHitbox.y, WHITE);
 
-		deskHitboxes = initializeDesksHitboxes(2, 5);
+		deskHitboxes = InitializeDesksHitboxes(2, 5);
 		for (int i = 0; i < deskHitboxes.size(); i++) {
 			for (int j = 0; j < deskHitboxes[0].size(); j++)
 				DrawTexture(deskTexture, (int)deskHitboxes[i][j].x - 15, (int)deskHitboxes[i][j].y, WHITE);
 		}
-		teacher.Draw();
+		teacher.Draw(currentRoomID - 1);
 		DrawTexture(teacherDesk, (int)teacherDeskHitbox.x, (int)teacherDeskHitbox.y, WHITE);
 		DrawTexture(board, (int)teacherDeskHitbox.x - board.width - 10, 60, WHITE);
-		teacher.drawEButton();
+		teacher.DrawEButton();
 	}
 }
 
@@ -246,7 +246,7 @@ void Map::TeacherHitbox(Rectangle& CharacterCurrentRec, Rectangle& CharacterNext
 }
 
 //Initializes the vector with the hitboxes of the doors in the hall
-vector<Rectangle> Map::initializeDoorsHitboxes(int numberOfDoors)
+vector<Rectangle> Map::InitializeDoorsHitboxes(int numberOfDoors)
 {
 	vector<Rectangle> doors;
 	
@@ -256,7 +256,7 @@ vector<Rectangle> Map::initializeDoorsHitboxes(int numberOfDoors)
 }
 
 //Initializes the vector with the textures of the doors in the hall
-vector<Texture2D> Map::initializeDoorsTextures(int numberOfDoors)
+vector<Texture2D> Map::InitializeDoorsTextures(int numberOfDoors)
 {
 	vector<Texture2D> textures;
 
@@ -266,7 +266,7 @@ vector<Texture2D> Map::initializeDoorsTextures(int numberOfDoors)
 }
 
 // Initializes the hitboxes of all the desks
-vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
+vector<vector<Rectangle>> Map::InitializeDesksHitboxes(int rows, int columns)
 {
 	Rectangle firstDesk = { (float)mapHitbox.leftBound.width  + 10.f, (float)mapHitbox.upperBound.height + 90.f, (float)deskTexture.width, deskTexture.height - 5.f };
 	vector<vector<Rectangle>> hitboxes;
@@ -281,7 +281,7 @@ vector<vector<Rectangle>> Map::initializeDesksHitboxes(int rows, int columns)
 }
 
 // Initializes the bookshelves hitboxes automatically
-vector<Rectangle> Map::initializeBookshelvesHitboxes() {
+vector<Rectangle> Map::InitializeBookshelvesHitboxes() {
 
 	vector <Rectangle> hitboxes;
 
@@ -292,7 +292,7 @@ vector<Rectangle> Map::initializeBookshelvesHitboxes() {
 	return hitboxes;
 }
 
-vector<Rectangle> Map::initSofasHitboxes() {
+vector<Rectangle> Map::InitSofasHitboxes() {
 	vector <Rectangle> hitboxes;
 
 	hitboxes.push_back({ (float)bookShelvesHitboxes[0].x - sofaTexture.width - 50.f, (float)doorInRoomHitbox.y, (float)sofaTexture.width, (float)sofaTexture.height - 30 });

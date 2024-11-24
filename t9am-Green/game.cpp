@@ -31,9 +31,9 @@ void Game::Update() {
 			ControlsMenuOpened = false;
 	}
 	else if (!PauseMenuOpened and !gameOverMenuOpened){
-			Rectangle CharacterRec = character.getTextureRect();
+			Rectangle CharacterRec = character.GetTextureRect();
 			// The player's hitbox with his position after one step
-			Rectangle NextCharacterRec = character.getCharacterNextRect();
+			Rectangle NextCharacterRec = character.GetCharacterNextRect();
 			map.UpdateDoor(CharacterRec);
 			map.CheckIfDoorIsUsed(NextCharacterRec);
 
@@ -42,7 +42,7 @@ void Game::Update() {
 			map.BookshelvesHitboxes(CharacterRec, NextCharacterRec);
 			map.SofasHitboxes(CharacterRec, NextCharacterRec);
 			map.TeacherHitbox(CharacterRec, NextCharacterRec);
-			map.teacher.setCollidingState(map.teacher.CheckCollision(NextCharacterRec));
+			map.teacher.SetCollidingState(map.teacher.CheckCollision(NextCharacterRec));
 			if (map.currentRoomID != 1)
 				map.CheckCollidingTeacherDesk(CharacterRec, NextCharacterRec);
 			if (!MenuToInteractOpened)
@@ -157,7 +157,7 @@ void Game::Draw() {
 	else {
 		map.Draw();
 		character.Draw();
-		character.drawHealth();
+		character.DrawHealth();
 	}
 
 	if (MenuToInteractOpened) {
