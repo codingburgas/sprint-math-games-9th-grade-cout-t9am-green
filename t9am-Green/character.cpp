@@ -13,7 +13,6 @@ Character::Character() {
 	frame = 0;
 	// The character's initial health
 	health = 3;
-
 }
 
 // Draws the updated position of the character
@@ -35,17 +34,15 @@ void Character::Draw() {
 	}
 }
 // These x and y variables will be equal to the x and y coordinates of the hitbox of the character after one step.
-void Character::Update(float x, float y) { 
-	position.x = x;						   
-	position.y = y;						   
-										   
+void Character::Update(float NewX, float NewY) { 
+	position.x = NewX;
+	position.y = NewY;			   
 
 //Moving right
 	if (IsKeyDown(KEY_D)) { 
 		frame++;
 		source = { 0.f, 0.f, (float)movingRight.width / 4.f, (float)movingRight.height };
 		source.x = (float)frame * source.width;
-		position.x;
 		WaitTime(updateTime);
 	}
 	// Moving left
@@ -53,7 +50,6 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingLeft.width / 4.f, (float)movingLeft.height };
 		source.x = (float)frame * source.width;
-		position.x;
 		WaitTime(updateTime);
 	}
 	// Moving up
@@ -61,7 +57,6 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingUp.width / 4.f, (float)movingUp.height };
 		source.x = (float)frame * source.width;
-		position.y;
 		WaitTime(updateTime);
 	}
 	// Moving down
@@ -69,7 +64,6 @@ void Character::Update(float x, float y) {
 		frame++;
 		source = { 0.f, 0.f, (float)movingDown.width / 4.f, (float)movingDown.height };
 		source.x = (float)frame * source.width;
-		position.y;
 		WaitTime(updateTime);
 	}
 	// Not moving

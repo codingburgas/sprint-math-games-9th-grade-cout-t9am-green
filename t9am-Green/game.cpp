@@ -18,13 +18,17 @@ void Game::Update() {
 		if (menu.CheckIfControlsClicked()) {
 			ControlsMenuOpened = true;
 		}
-			if (menu.CheckIfExitControlsClicked())
-				ControlsMenuOpened = false;
+		if (menu.CheckIfExitControlsClicked())
+			ControlsMenuOpened = false;
 	}
 
 	if (!MenuClosed) {
 		MenuClosed = menu.CheckIfPlayIsClicked();
 		exitGame = menu.CheckIfExitIsClicked();
+		if (menu.CheckIfControlsIsClicked())
+			ControlsMenuOpened = true;
+		if (menu.CheckIfExitControlsClicked())
+			ControlsMenuOpened = false;
 	}
 	else if (!PauseMenuOpened and !gameOverMenuOpened){
 			Rectangle CharacterRec = character.getTextureRect();

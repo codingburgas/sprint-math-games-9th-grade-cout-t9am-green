@@ -15,6 +15,7 @@ Map::Map() {
 	teacherDesk = LoadTexture("Graphics/TeacherDesk.png");
 	eButton1 = LoadTexture("Graphics/E-button1.png");
 	sofaTexture = LoadTexture("Graphics/sofa.png");
+	board = LoadTexture("Graphics/board.png");
 	paintingsTextures = {
 		LoadTexture("Graphics/painting1.png"),
 		LoadTexture("Graphics/painting2.png"),
@@ -89,6 +90,7 @@ void Map::Draw() {
 		}
 		teacher.Draw();
 		DrawTexture(teacherDesk, (int)teacherDeskHitbox.x, (int)teacherDeskHitbox.y, WHITE);
+		DrawTexture(board, (int)teacherDeskHitbox.x - board.width - 10, 60, WHITE);
 		teacher.drawEButton();
 	}
 }

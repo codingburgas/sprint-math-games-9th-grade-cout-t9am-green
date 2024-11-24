@@ -48,6 +48,7 @@ public:
 	Texture2D eButton1;
 	Texture2D eButton2;
 	Texture2D sofaTexture;
+	Texture2D board;
 	vector<Texture2D> paintingsTextures;
 	// The hitbox of the classroom door
 	Rectangle doorInRoomHitbox;

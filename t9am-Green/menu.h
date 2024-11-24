@@ -3,7 +3,6 @@
 #include "textBox.h"
 #include <map>
 #include <string>
-#include "time.h"
 using namespace std;
 
 // Class that will draw and update all the menus in the game
@@ -20,6 +19,7 @@ public:
 	void DrawPauseMenu();
 	void DrawControls();
 	bool CheckIfPlayIsClicked();
+	bool CheckIfControlsIsClicked();
 	bool CheckIfExitIsClicked();
 	bool CheckIfInteractionClosed();
 	bool IsCheckClicked();
@@ -30,6 +30,7 @@ public:
 	bool CheckIfExitControlsClicked();
 private:
 	Rectangle playButton;
+	Rectangle mainMenuControlsButton;
 	Rectangle exitButton;
 	Rectangle submitButton;
 	Rectangle interactionCloseButton;

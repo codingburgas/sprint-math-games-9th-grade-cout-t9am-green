@@ -2,7 +2,8 @@
 
 Menu::Menu() {
 	playButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 - 25, 150.f, 50.f };
-	exitButton = { (float)GetScreenWidth() / 2 - 75,(float)GetScreenHeight() / 2 + 2 * playButton.height - 25, 150.f, 50.f };
+	mainMenuControlsButton = { (float)GetScreenWidth() / 2 - 125, (float)GetScreenHeight() / 2 + 2 * playButton.height - 25, 250.f, 50.f };
+	exitButton = { (float)GetScreenWidth() / 2 - 75, (float)GetScreenHeight() / 2 + 4 * playButton.height - 25, 150.f, 50.f };
 	interactionMenu = { 100.f, 100.f, 700.f, 300.f };
 	submitButton = { (float)textBox.textbox.x + 25, (float)textBox.textbox.y + 70, 175.f, 60.f };
 	interactionCloseButton = { interactionMenu.x + interactionMenu.width - 150, interactionMenu.y + interactionMenu.height - 60, 140, 50 };
@@ -19,12 +20,14 @@ Menu::Menu() {
 
 // Draws the start menu
 void Menu::Draw() {
-	DrawText("Count the Teacher", (float)GetScreenWidth() / 2 - 150, 40.f, 30, WHITE);
+	DrawText("Count the Teacher", 40, 40, 85, WHITE);
 	ClearBackground(DARKGREEN);
 	DrawRectangleRec(playButton, GREEN);
-	DrawTextEx(GetFontDefault(), "Play", { playButton.x + MeasureTextEx(GetFontDefault(), "Play", 20, 5).x / 2, playButton.y }, 45, 5, WHITE);
+	DrawTextEx(GetFontDefault(), "Play", { playButton.x + MeasureTextEx(GetFontDefault(), "Play", 20, 5).x / 2, playButton.y + 5 }, 45, 5, WHITE);
+	DrawRectangleRec(mainMenuControlsButton, ORANGE);
+	DrawTextEx(GetFontDefault(), "Controls", { mainMenuControlsButton.x + MeasureTextEx(GetFontDefault(), "Controls", 30, 5).x / 4 - 10, mainMenuControlsButton.y + 5 }, 45, 5, WHITE);
 	DrawRectangleRec(exitButton, RED);
-	DrawTextEx(GetFontDefault(), "Exit", { exitButton.x + MeasureTextEx(GetFontDefault(), "Exit", 30, 5).x / 2, exitButton.y }, 45, 5, WHITE);
+	DrawTextEx(GetFontDefault(), "Exit", { exitButton.x + MeasureTextEx(GetFontDefault(), "Exit", 30, 5).x / 2, exitButton.y + 5 }, 45, 5, WHITE);
 }
 
 // Draws the interaction menu
@@ -35,10 +38,10 @@ void Menu::DrawInteractionMenu() {
 	textBox.Draw();
 	DrawRectangleRec(submitButton, GREEN);
 	DrawRectangleLinesEx(submitButton, 4, DARKGREEN);
-	DrawText("Check", submitButton.x + 10, submitButton.y + 5, 50, WHITE);
+	DrawText("Check", (int)submitButton.x + 10, (int)submitButton.y + 5, 50, WHITE);
 	DrawRectangleRec(interactionCloseButton, RED);
 	DrawRectangleLinesEx(interactionCloseButton, 3, MAROON);
-	DrawText("Close", interactionCloseButton.x + 10, interactionCloseButton.y + 5, 40, WHITE);
+	DrawText("Close", (int)interactionCloseButton.x + 10, (int)interactionCloseButton.y + 5, 40, WHITE);
 }
 
 // Returns true when we click on the play button
@@ -47,6 +50,11 @@ bool Menu::CheckIfPlayIsClicked() {
 		return 1;
 	else
 		return 0;
+}
+
+bool Menu::CheckIfControlsIsClicked() {
+	if (CheckCollisionPointRec(GetMousePosition(), mainMenuControlsButton) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		return 1;
 }
 
 // Returns true when we click on the exit button
@@ -118,48 +126,48 @@ bool Menu::CheckIfExitControlsClicked() {
 void Menu::ShowRandomProblem(map<string, string> RandomProblem) {
 	map<string, string>::iterator it = RandomProblem.begin();
 
-	DrawText(it->first.c_str(), textBox.textbox.x - 20, textBox.textbox.y - 50, 30, WHITE);
+	DrawText(it->first.c_str(), (int)textBox.textbox.x - 20, (int)textBox.textbox.y - 50, 30, WHITE);
 }
 
 void Menu::DrawWinWindow() {
 	DrawRectangleRec(gameWinWindow, GREEN);
 	DrawRectangleLinesEx(gameWinWindow, 10, DARKGREEN);
-	DrawText("YOU WON THE GAME!", GetScreenWidth() / 2.f - 165 , 180, 30, WHITE);
+	DrawText("YOU WON THE GAME!", GetScreenWidth() / 2 - 165 , 180, 30, WHITE);
 	DrawRectangleRec(gameCloseButton, RED);
-	DrawText("Close", (float)gameCloseButton.x + 40, (float)gameCloseButton.y + 8, 40, WHITE);
+	DrawText("Close", (int)gameCloseButton.x + 40, (int)gameCloseButton.y + 8, 40, WHITE);
 }
 
 void Menu::DrawGameOverMenu() {
 	DrawRectangleRec(gameOverMenu, DARKGRAY);
-	DrawText("GAME OVER", GetScreenWidth() / 2.f - 140, 100, 50, RED);
+	DrawText("GAME OVER", GetScreenWidth() / 2 - 140, 100, 50, RED);
 	DrawRectangleLinesEx(gameOverMenu, 4, BLACK);
 	DrawRectangleRec(gameCloseButton, RED);
-	DrawText("Close", (float)gameCloseButton.x + 40, (float)gameCloseButton.y + 8, 40, WHITE);
+	DrawText("Close", (int)gameCloseButton.x + 40, (int)gameCloseButton.y + 8, 40, WHITE);
 }
 //Draws paused menu
 void Menu::DrawPauseMenu() {
 	DrawRectangleRec(pauseMenu, GRAY);
 	DrawRectangleLinesEx(pauseMenu, 4, BLACK);
-	DrawText("Paused", GetScreenWidth() / 2.f - 80, 120, 50, WHITE);
+	DrawText("Paused", GetScreenWidth() / 2 - 80, 120, 50, WHITE);
 	DrawRectangleRec(resumeButton, LIGHTGRAY);
 	DrawRectangleLinesEx(resumeButton, 3, DARKGRAY);
-	DrawText("Resume", resumeButton.x + 7, resumeButton.y + 8, 40, BLACK);
+	DrawText("Resume", (int)resumeButton.x + 7, (int)resumeButton.y + 8, 40, BLACK);
 	DrawRectangleRec(controlsButton, LIGHTGRAY);
 	DrawRectangleLinesEx(controlsButton, 3, DARKGRAY);
-	DrawText("Controls", controlsButton.x + 10, controlsButton.y + 8, 40, BLACK);
+	DrawText("Controls", (int)controlsButton.x + 10, (int)controlsButton.y + 8, 40, BLACK);
 	DrawRectangleRec(exitGamePauseButton, LIGHTGRAY);
 	DrawRectangleLinesEx(exitGamePauseButton, 3, DARKGRAY);
-	DrawText("Exit Game", exitGamePauseButton.x + 10, exitGamePauseButton.y + 8, 40, BLACK);
+	DrawText("Exit Game", (int)exitGamePauseButton.x + 10, (int)exitGamePauseButton.y + 8, 40, BLACK);
 }
 
 void Menu::DrawControls() {
 	DrawRectangleRec(controlsMenu, GRAY);
 	DrawRectangleLinesEx(controlsMenu, 4, BLACK);
-	DrawText("Controls", controlsMenu.width / 2, controlsMenu.y + 10, 40, WHITE);
-	DrawText("WASD - Move", controlsMenu.x + 10, controlsMenu.y + 70, 40, BLACK);
-	DrawText("E - Interact", controlsMenu.x + 10, controlsMenu.y + 110, 40, BLACK);
-	DrawText("Q - Pause", controlsMenu.x + 10, controlsMenu.y + 150, 40, BLACK);
-	DrawText("Enter - Check Question", controlsMenu.x + 10, controlsMenu.y + 190, 40, BLACK);
+	DrawText("Controls", (int)controlsMenu.width / 2, (int)controlsMenu.y + 10, 40, WHITE);
+	DrawText("WASD - Move", (int)controlsMenu.x + 10, (int)controlsMenu.y + 70, 40, BLACK);
+	DrawText("E - Interact", (int)controlsMenu.x + 10, (int)controlsMenu.y + 110, 40, BLACK);
+	DrawText("Q - Pause", (int)controlsMenu.x + 10, (int)controlsMenu.y + 150, 40, BLACK);
+	DrawText("Enter - Check Question", (int)controlsMenu.x + 10, (int)controlsMenu.y + 190, 40, BLACK);
 	DrawRectangleRec(exitControlsMenuButton, RED);
-	DrawText("Back", exitControlsMenuButton.x + 10, exitControlsMenuButton.y + 8, 40, BLACK);
+	DrawText("Back", (int)exitControlsMenuButton.x + 10, (int)exitControlsMenuButton.y + 8, 40, BLACK);
 }
